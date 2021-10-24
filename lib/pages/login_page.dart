@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cuervos_app/libs/fade_animation.dart';
 
+import 'package:cuervos_app/saiiut/login.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/widgets.dart';
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
 
@@ -9,6 +13,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController matriculaController = new TextEditingController();
+  TextEditingController contrasenaController = new TextEditingController();
+  final _form = GlobalKey<FormState>();
+
+  bool _saveForm() {
+    final isValid = _form.currentState!.validate();
+    print(isValid);
+    if (!isValid) {
+      return false;
+    }
+    return isValid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: _contenedores());
@@ -17,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _contenedores() {
     return Container(
       width: double.infinity,
+      height: double.infinity,
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -28,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: [
           Container(
-              margin: const EdgeInsets.only(top: 80),
+              margin: const EdgeInsets.only(top: 90),
               child: const FadeAnimation(
                 2,
                 Text(
@@ -44,12 +62,14 @@ class _LoginPageState extends State<LoginPage> {
           Expanded(
               child: Container(
             width: double.infinity,
+            height: double.infinity,
+            alignment: Alignment.center,
             decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30))),
-            margin: const EdgeInsets.only(top: 55),
+            margin: const EdgeInsets.only(top: 70),
             child: _formulario(),
           ))
         ],
@@ -60,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _formulario() {
     return SingleChildScrollView(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(
             height: 37,
@@ -79,19 +100,26 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               )),
-          FadeAnimation(
-            1,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: _inputCorreo(),
+          Form(
+            key: _form,
+            child: Column(
+              children: [
+                FadeAnimation(
+                  1,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: _inputMatricula(),
+                  ),
+                ),
+                FadeAnimation(
+                    1,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: _inputContrasena(),
+                    )),
+              ],
             ),
           ),
-          FadeAnimation(
-              1,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: _inputContrasena(),
-              )),
           const SizedBox(
             height: 20,
           ),
@@ -116,12 +144,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _inputCorreo() {
+  Widget _inputMatricula() {
     return Container(
         width: double.infinity,
         height: 70,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.green.shade600, width: 1),
             boxShadow: [
@@ -138,18 +166,28 @@ class _LoginPageState extends State<LoginPage> {
             const Icon(Icons.email_outlined),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10, top: 6),
                 child: TextFormField(
+                  controller: matriculaController,
+                  validator: (text) {
+                    if (!(matriculaController.text.length > 5)) {
+                      return "Matrícula demasiado corta";
+                    }
+                    return null;
+                  },
                   cursorColor: Colors.green.shade600,
                   autocorrect: false,
                   enableSuggestions: false,
                   keyboardType: TextInputType.number,
                   maxLines: 1,
                   decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Colors.green.shade600),
-                    label: Text("Matrícula"),
-                    border: InputBorder.none,
-                  ),
+                      labelStyle: TextStyle(color: Colors.green.shade600),
+                      label: const Text("Matrícula"),
+                      border: InputBorder.none,
+                      focusedErrorBorder:
+                          const OutlineInputBorder(borderSide: BorderSide.none),
+                      errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide.none)),
                 ),
               ),
             ),
@@ -162,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
         width: double.infinity,
         height: 70,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.green.shade600, width: 1),
             boxShadow: [
@@ -179,17 +217,28 @@ class _LoginPageState extends State<LoginPage> {
             const Icon(Icons.password_outlined),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.only(left: 10, top: 5),
+                alignment: Alignment.center,
                 child: TextFormField(
+                  controller: contrasenaController,
+                  validator: (text) {
+                    if (contrasenaController.text.isEmpty) {
+                      return "La contraseña no puede estar vacia";
+                    }
+                    return null;
+                  },
                   obscureText: true,
                   autocorrect: false,
                   enableSuggestions: false,
                   maxLines: 1,
                   decoration: InputDecoration(
-                    labelStyle: TextStyle(color: Colors.green.shade600),
-                    label: Text("Contraseña"),
-                    border: InputBorder.none,
-                  ),
+                      labelStyle: TextStyle(color: Colors.green.shade600),
+                      label: const Text("Contraseña"),
+                      border: InputBorder.none,
+                      focusedErrorBorder:
+                          const OutlineInputBorder(borderSide: BorderSide.none),
+                      errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide.none)),
                 ),
               ),
             ),
@@ -199,7 +248,13 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _botonIniciarSesion() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        login(
+            context: context,
+            matricula: matriculaController.text.toString(),
+            contrasena: contrasenaController.text.toString());
+        //Navigator.pushNamed(context, '/home');
+      },
       style: ElevatedButton.styleFrom(
           onPrimary: Colors.greenAccent,
           shadowColor: Colors.green,
@@ -221,7 +276,7 @@ class _LoginPageState extends State<LoginPage> {
           child: const Text(
             'Enviar',
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 20,
               color: Colors.white,
             ),
           ),
