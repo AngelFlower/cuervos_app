@@ -250,15 +250,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget _botonIniciarSesion() {
     return ElevatedButton(
       onPressed: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => GradesPage()));
-        /*
+        //Navigator.push(
+        //    context, MaterialPageRoute(builder: (context) => GradesPage()));
+
         login(
             context: context,
             matricula: matriculaController.text.toString(),
             contrasena: contrasenaController.text.toString());
         //Navigator.pushNamed(context, '/home');
-        */
       },
       style: ElevatedButton.styleFrom(
           onPrimary: Colors.greenAccent,

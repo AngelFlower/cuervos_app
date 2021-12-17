@@ -1,3 +1,4 @@
+import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' show parse;
@@ -9,11 +10,11 @@ void login(
   String respuesta = '';
   String loginUrl =
       'http://saiiut.utvtol.edu.mx/jsp/acceso.jsp?xUsuario=$matricula&xContrasena=$contrasena&xUniversidad=22';
-  String calificacionesUrl =
+  String datosUrl =
       'http://saiiut.utvtol.edu.mx/jsp/Escolar/muestra_datos_alumno.jsp';
 
   var loginUri = Uri.parse(loginUrl);
-  var calificacionesUri = Uri.parse(loginUrl);
+  var datosUri = Uri.parse(datosUrl);
 
   // http post request and get headers
   http.post(loginUri).then((response) {
@@ -32,12 +33,10 @@ void login(
                 ],
               ));
     } else {
-      http.get(calificacionesUri, headers: {
+      http.get(datosUri, headers: {
         'Cookie': response.headers['set-cookie'].toString(),
       }).then((responses) {
-        print(responses.body);
-        var document = parse(responses.body);
-        print(document.querySelector('forma'));
+        obtenerDatosEstudiante(responses);
       });
       Navigator.pushReplacementNamed(context, '/home');
     }
