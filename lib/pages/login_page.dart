@@ -1,8 +1,8 @@
 import 'package:cuervos_app/pages/grades_page.dart';
+import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
 import 'package:cuervos_app/libs/fade_animation.dart';
 
-import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 
@@ -253,7 +253,7 @@ class _LoginPageState extends State<LoginPage> {
         //Navigator.push(
         //    context, MaterialPageRoute(builder: (context) => GradesPage()));
 
-        login(
+        Login().login(
             context: context,
             matricula: matriculaController.text.toString(),
             contrasena: contrasenaController.text.toString());
