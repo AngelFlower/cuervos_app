@@ -1,3 +1,4 @@
+import 'package:cuervos_app/pages/grades_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cuervos_app/libs/fade_animation.dart';
 
@@ -249,11 +250,15 @@ class _LoginPageState extends State<LoginPage> {
   Widget _botonIniciarSesion() {
     return ElevatedButton(
       onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => GradesPage()));
+        /*
         login(
             context: context,
             matricula: matriculaController.text.toString(),
             contrasena: contrasenaController.text.toString());
         //Navigator.pushNamed(context, '/home');
+        */
       },
       style: ElevatedButton.styleFrom(
           onPrimary: Colors.greenAccent,

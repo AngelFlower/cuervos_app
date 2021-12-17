@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   simple_animations: ^4.0.1
   http: ^0.13.4
+  html: ^0.15.0
+  webview_flutter: ^3.0.0
 
 dev_dependencies:
   flutter_test:
