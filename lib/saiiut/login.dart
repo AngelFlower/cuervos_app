@@ -44,10 +44,12 @@ class Login {
   }
 
   storeCookie(String cookie) async {
+    print('guardando $cookie');
     await storage.write(key: 'auth', value: cookie);
   }
 
   Future getCookie() async {
+    print('leyendo ${await storage.read(key: 'auth')}');
     return await storage.read(key: 'auth');
   }
 

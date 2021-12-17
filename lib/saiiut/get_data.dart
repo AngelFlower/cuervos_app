@@ -1,4 +1,5 @@
 import 'package:cuervos_app/saiiut/login.dart';
+import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
@@ -8,19 +9,23 @@ class getData {
         'http://saiiut.utvtol.edu.mx/jsp/Escolar/muestra_datos_alumno.jsp';
     var datosUri = Uri.parse(datosUrl);
 
-    http.get(datosUri, headers: {
-      'Cookie': Login().getCookie().toString(),
-    }).then((responses) {
-      return obtenerDatosEstudiante(responses);
-    });
+    var cookie = await Login().getCookie();
 
-    return dynamic;
+    var respuesta;
+    print('cookie: $cookie');
+    await http.get(datosUri, headers: {
+      'Cookie': cookie,
+    }).then((responses) {
+      respuesta = responses;
+    });
+    return obtenerDatosEstudiante(respuesta);
+    //return dynamic;
     //Navigator.pushReplacementNamed(context, '/home');
   }
 
   Future<dynamic> obtenerDatosEstudiante(responses) async {
     var documento = parse(responses.body);
-
+    //print(responses.body);
     var tabla1 = documento.querySelector('.Tabla');
     var calificacionesTabla = documento.querySelectorAll('.textoForma')[14];
 
@@ -67,18 +72,18 @@ class getData {
     var datos = tabla1!.querySelectorAll('.textoConsulta');
 
     Map<String, String> datosEstudiante = {
-      'Matricula': datos[0].text,
-      'Nombre': datos[1].text,
-      'Apellido Paterno': datos[2].text,
-      'Apellido Materno': datos[3].text,
-      'Fecha Nacimiento': datos[4].text,
-      'Estado civil': datos[5].text,
-      'CURP': datos[7].text,
-      'Carrera': datos[9].text,
-      'Turno': datos[10].text,
-      'Cuatrimiestre': datos[11].text,
-      'Grupo': datos[12].text,
-      'Situacion Academica': datos[13].text,
+      'matricula': datos[0].text,
+      'nombre': datos[1].text,
+      'apellido_paterno': datos[2].text,
+      'apellido_materno': datos[3].text,
+      'fecha_nacimiento': datos[4].text,
+      'estado_civil': datos[5].text,
+      'curp': datos[7].text,
+      'carrera': datos[9].text,
+      'turno': datos[10].text,
+      'cuatrimiestre': datos[11].text,
+      'grupo': datos[12].text,
+      'situacion_academica': datos[13].text,
     };
     //print(datosAlumno);
 

@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // get future map
   Future<dynamic> obtenerInfo() async {
-    return getData().obtenerDatos();
+    return await getData().obtenerDatos();
   }
 
   @override
@@ -20,7 +20,15 @@ class _HomePageState extends State<HomePage> {
         body: Stack(
       children: [
         _fondoApp(),
-        _perfil(context),
+        FutureBuilder<dynamic>(
+            future: obtenerInfo(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return _perfil(context, snapshot.data);
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
       ],
     ));
   }
@@ -90,7 +98,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget _perfil(BuildContext context) {
+Widget _perfil(BuildContext context, data) {
   return Stack(
     children: [
       Column(
@@ -119,7 +127,8 @@ Widget _perfil(BuildContext context) {
                 SizedBox(
                   height: 10.0,
                 ),
-                Text('Angel Flores Carlos',
+                Text(
+                    '${data["estudiante"]["datos"]["nombre"]} ${data["estudiante"]["datos"]["apellido_paterno"]} ${data["estudiante"]["datos"]["apellido_materno"]}',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -141,62 +150,88 @@ Widget _perfil(BuildContext context) {
             flex: 5,
             child: Container(
               color: Colors.grey[200],
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Center(
                   child: Card(
+                      elevation: 2.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
                       margin: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 0.0),
                       child: Container(
-                          width: 310.0,
-                          height: 290.0,
+                          height: 170.0,
                           child: Padding(
-                            padding: EdgeInsets.all(10.0),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 20.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Information",
+                                  "Consulta",
                                   style: TextStyle(
-                                    fontSize: 17.0,
+                                    fontSize: 20.0,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
                                 Divider(
                                   color: Colors.grey[300],
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.home,
-                                      color: Colors.blueAccent[400],
-                                      size: 35,
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.green.shade400,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
                                     ),
-                                    SizedBox(
-                                      width: 20.0,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    elevation: 10.0,
+                                  ),
+                                  onPressed: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          "Guild",
-                                          style: TextStyle(
-                                            fontSize: 15.0,
-                                          ),
+                                        Icon(
+                                          Icons.school,
+                                          color: Colors.black45,
+                                          size: 35,
                                         ),
-                                        Text(
-                                          "FairyTail, Magnolia",
-                                          style: TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.grey[400],
-                                          ),
+                                        SizedBox(
+                                          width: 20.0,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Calificaciones",
+                                              style: TextStyle(
+                                                fontSize: 15.0,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.5,
+                                              child: Text(
+                                                "Consulta tus calificaciones por cuatrimestre",
+                                                style: TextStyle(
+                                                  fontSize: 13.0,
+                                                  color: Colors.white70,
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         )
                                       ],
-                                    )
-                                  ],
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 20.0,
                                 ),
+                                /*
+
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -299,6 +334,7 @@ Widget _perfil(BuildContext context) {
                                     )
                                   ],
                                 ),
+                                */
                               ],
                             ),
                           )))),
@@ -311,105 +347,108 @@ Widget _perfil(BuildContext context) {
           left: 20.0,
           right: 20.0,
           child: Card(
+              elevation: 2.0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
               child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                padding: EdgeInsets.all(16.0),
+                child: Column(
                   children: [
-                    Container(
-                        child: Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          'Matrícula',
-                          style: TextStyle(
-                              color: Colors.grey[400], fontSize: 14.0),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          "222010681",
-                          style: TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        )
-                      ],
-                    )),
-                    Container(
-                      child: Column(children: [
-                        Text(
-                          'Grupo',
-                          style: TextStyle(
-                              color: Colors.grey[400], fontSize: 14.0),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          '',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        )
-                      ]),
-                    ),
-                    Container(
-                        child: Column(
-                      children: [
-                        Text(
-                          'Cuatrimestre',
-                          style: TextStyle(
-                              color: Colors.grey[400], fontSize: 14.0),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          '4to',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        )
-                      ],
-                    )),
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                        child: Column(
-                      children: [
-                        Text(
-                          'Carrera',
-                          style: TextStyle(
-                              color: Colors.grey[400], fontSize: 14.0),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: Text(
-                            "Tecnologías de la Información: Área Desarrollo de Software Multiplataforma",
-                            style: TextStyle(
-                              fontSize: 14.0,
+                        Container(
+                            child: Column(
+                          children: [
+                            Text(
+                              'Matrícula',
+                              style: TextStyle(
+                                  color: Colors.grey[400], fontSize: 14.0),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Text(
+                              '${data["estudiante"]["datos"]["matricula"]}',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                              ),
+                            )
+                          ],
+                        )),
+                        Container(
+                          child: Column(children: [
+                            Text(
+                              'Grupo',
+                              style: TextStyle(
+                                  color: Colors.grey[400], fontSize: 14.0),
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Text(
+                              '${data["estudiante"]["datos"]["grupo"]}',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                              ),
+                            )
+                          ]),
+                        ),
+                        Container(
+                            child: Column(
+                          children: [
+                            Text(
+                              'Cuatrimestre',
+                              style: TextStyle(
+                                  color: Colors.grey[400], fontSize: 14.0),
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Text(
+                              '${data["estudiante"]["datos"]["cuatrimiestre"]}',
+                              style: TextStyle(
+                                fontSize: 15.0,
+                              ),
+                            )
+                          ],
+                        )),
                       ],
-                    )),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                            child: Column(
+                          children: [
+                            Text(
+                              'Carrera',
+                              style: TextStyle(
+                                  color: Colors.grey[400], fontSize: 14.0),
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: Text(
+                                '${data["estudiante"]["datos"]["carrera"]}',
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            )
+                          ],
+                        )),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-          )))
+              )))
     ],
   );
 }
