@@ -27,6 +27,9 @@ class getData {
     var documento = parse(responses.body);
     //print(responses.body);
     var tabla1 = documento.querySelector('.Tabla');
+    if (!(documento.querySelectorAll('.textoForma').length > 13)) {
+      return false;
+    }
     var calificacionesTabla = documento.querySelectorAll('.textoForma')[14];
 
     var cuatrimestesLista = calificacionesTabla.querySelectorAll('table');
@@ -48,7 +51,8 @@ class getData {
           materiaCalificacion = materia.querySelectorAll('td')[5].text;
           if (j != 1) {
             materiasMap.addEntries([
-              MapEntry(materiaNombre, {
+              MapEntry('${j - 1}', {
+                'nombre': materiaNombre,
                 'profesor': materiaProfesor,
                 'calificacion': materiaCalificacion
               }),

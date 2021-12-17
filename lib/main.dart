@@ -1,3 +1,5 @@
+import 'package:cuervos_app/pages/grades_page.dart';
+import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:flutter/material.dart';
 import 'pages/login_page.dart';
 import 'pages/home_page.dart';
@@ -12,15 +14,36 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  Future<dynamic> obtenerInfo() async {
+    return await getData().obtenerDatos();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
-      routes: {
-        '/login': (BuildContext context) => LoginPage(),
-        '/home': (BuildContext context) => HomePage(),
-      },
-    );
+    return FutureBuilder(
+        future: obtenerInfo(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            //print('esto es del login, etc ${snapshot.data}');
+            var initialRoute = '/login';
+            if (snapshot.hasData != false) {
+              initialRoute = '/home';
+            }
+            print('ruta inicial $initialRoute');
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              initialRoute: initialRoute,
+              routes: {
+                '/login': (BuildContext context) => LoginPage(),
+                '/home': (BuildContext context) => HomePage(),
+                '/grades': (BuildContext context) => GradesPage(),
+              },
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }
