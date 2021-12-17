@@ -11,7 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // get future map
   Future<dynamic> obtenerInfo() async {
-    return await getData().obtenerDatos();
+    return await GetData().obtenerDatos();
   }
 
   @override
@@ -36,8 +36,8 @@ class _HomePageState extends State<HomePage> {
           right: 0.0,
           child: AppBar(
             title: Text(''), // You can add title here
-            leading: new IconButton(
-              icon: new Icon(Icons.arrow_back_ios, color: Colors.white70),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios, color: Colors.white70),
               onPressed: () => Navigator.of(context).pop(),
             ),
             backgroundColor:
@@ -47,41 +47,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ],
     ));
-  }
-
-  Widget _contenido() {
-    return SafeArea(
-        child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 30.0),
-      child: Column(
-        children: [
-          _titulos(),
-        ],
-      ),
-    ));
-  }
-
-  Widget _titulos() {
-    return Container(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            'Classify transaction',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Text('Classify this transaction into a particular category',
-              style: TextStyle(color: Colors.white, fontSize: 18.0))
-        ],
-      ),
-    );
   }
 
   Widget _fondoApp() {

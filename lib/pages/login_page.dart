@@ -1,5 +1,3 @@
-import 'package:cuervos_app/pages/grades_page.dart';
-import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
 import 'package:cuervos_app/libs/fade_animation.dart';
@@ -15,13 +13,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController matriculaController = new TextEditingController();
-  TextEditingController contrasenaController = new TextEditingController();
+  TextEditingController matriculaController = TextEditingController();
+  TextEditingController contrasenaController = TextEditingController();
   final _form = GlobalKey<FormState>();
 
   bool _saveForm() {
     final isValid = _form.currentState!.validate();
-    print(isValid);
+
     if (!isValid) {
       return false;
     }

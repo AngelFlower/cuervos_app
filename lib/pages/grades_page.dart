@@ -10,7 +10,7 @@ class GradesPage extends StatefulWidget {
 
 class _GradesPageState extends State<GradesPage> {
   Future<dynamic> obtenerInfo() async {
-    return await getData().obtenerDatos();
+    return await GetData().obtenerDatos();
   }
 
   @override
@@ -23,8 +23,8 @@ class _GradesPageState extends State<GradesPage> {
         future: obtenerInfo(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
-            print(
-                'tiene datos ${snapshot.data['estudiante']['cuatrimestres'].length}');
+            //print(
+            //    'tiene datos ${snapshot.data['estudiante']['cuatrimestres'].length}');
             return ListView.builder(
               itemCount: snapshot.data['estudiante']['cuatrimestres'].length,
               itemBuilder: (BuildContext context, int index) {
@@ -43,7 +43,7 @@ class _GradesPageState extends State<GradesPage> {
                   //    'index ${snapshot.data['estudiante']['cuatrimestres'][(index + 1).toString()]['materias']}');
                   materias = snapshot.data['estudiante']['cuatrimestres']
                       [(index + 1).toString()]['materias'];
-                  print('materias $materias');
+                  //print('materias $materias');
                   materiasWidget.add(
                     ListTile(
                       title: Text(
@@ -53,7 +53,7 @@ class _GradesPageState extends State<GradesPage> {
                     ),
                   );
                   for (var j = 0; j < materias.length; j++) {
-                    print('materias ${materias['${j + 1}']['nombre']}');
+                    //print('materias ${materias['${j + 1}']['nombre']}');
                     materiasWidget
                       ..add(ListTile(
                         title: Text('${materias['${j + 1}']['nombre']}'),

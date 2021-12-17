@@ -15,7 +15,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   Future<dynamic> obtenerInfo() async {
-    return await getData().obtenerDatos();
+    return await GetData().obtenerDatos();
   }
 
   @override
@@ -29,7 +29,7 @@ class _AppState extends State<App> {
             if (snapshot.hasData != false) {
               initialRoute = '/home';
             }
-            print('ruta inicial $initialRoute');
+            //print('ruta inicial $initialRoute');
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               initialRoute: initialRoute,

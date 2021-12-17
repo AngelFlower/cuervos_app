@@ -1,9 +1,8 @@
 import 'package:cuervos_app/saiiut/login.dart';
-import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
-class getData {
+class GetData {
   Future<dynamic> obtenerDatos() async {
     String datosUrl =
         'http://saiiut.utvtol.edu.mx/jsp/Escolar/muestra_datos_alumno.jsp';
@@ -12,7 +11,7 @@ class getData {
     var cookie = await Login().getCookie();
 
     var respuesta;
-    print('cookie: $cookie');
+    //print('cookie: $cookie');
     await http.get(datosUri, headers: {
       'Cookie': cookie,
     }).then((responses) {
@@ -95,7 +94,7 @@ class getData {
       'estudiante': {'datos': datosEstudiante, 'cuatrimestres': cuatrimestesMap}
     };
 
-    print(estudiante);
+    //print(estudiante);
     return estudiante;
   }
 }

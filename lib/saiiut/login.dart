@@ -1,8 +1,6 @@
-import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' show parse;
 
 class Login {
   final storage = const FlutterSecureStorage();
@@ -44,12 +42,10 @@ class Login {
   }
 
   storeCookie(String cookie) async {
-    print('guardando $cookie');
     await storage.write(key: 'auth', value: cookie);
   }
 
   Future getCookie() async {
-    print('leyendo ${await storage.read(key: 'auth')}');
     return await storage.read(key: 'auth');
   }
 
