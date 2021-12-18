@@ -24,12 +24,12 @@ class _AppState extends State<App> {
         future: obtenerInfo(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            //print('esto es del login, etc ${snapshot.data}');
+            print('esto es del login, etc ${snapshot.data}');
             var initialRoute = '/login';
             if (snapshot.hasData != false) {
               initialRoute = '/home';
             }
-            //print('ruta inicial $initialRoute');
+            print('ruta inicial $initialRoute');
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               initialRoute: initialRoute,

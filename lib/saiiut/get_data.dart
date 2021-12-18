@@ -51,9 +51,11 @@ class GetData {
           if (j != 1) {
             materiasMap.addEntries([
               MapEntry('${j - 1}', {
-                'nombre': materiaNombre,
-                'profesor': materiaProfesor,
-                'calificacion': materiaCalificacion
+                'nombre': materiaNombre.replaceFirst(RegExp(r"\s+\b|\b\s"), ''),
+                'profesor':
+                    materiaProfesor.replaceFirst(RegExp(r"\s+\b|\b\s"), ''),
+                'calificacion':
+                    materiaCalificacion.replaceFirst(RegExp(r"\s+\b|\b\s"), '')
               }),
             ]);
           }
