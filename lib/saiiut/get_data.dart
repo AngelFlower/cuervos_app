@@ -10,6 +10,9 @@ class GetData {
 
     var cookie = await Login().getCookie();
 
+    if (cookie == null) {
+      return null;
+    }
     var respuesta;
     //print('cookie: $cookie');
     await http.get(datosUri, headers: {
@@ -43,6 +46,7 @@ class GetData {
       var materias = cuatrimestre.querySelectorAll('tr');
       for (var j = 1; j < materias.length; j++) {
         var materia = materias[j];
+        //print(materia.outerHtml);
         var materiaNombre = materia.querySelectorAll('td')[0].text;
         var materiaProfesor = materia.querySelectorAll('td')[1].text;
         var materiaCalificacion = '';
@@ -62,7 +66,12 @@ class GetData {
 
           //print('materia');
         }
-        if (materias.length - 1 == j) {
+        if (i == cuatrimestesLista.length - 1) {
+          if (materias.length - 2 == j) {
+            promedio = materia.querySelectorAll('td')[1].text;
+          }
+          //print('Cuatri ultimo ${materia.text}');
+        } else if (materias.length - 1 == j) {
           promedio = materia.querySelectorAll('td')[1].text;
         }
         //print('$materiaNombre $materiaCalificacion, $materiaProfesor');

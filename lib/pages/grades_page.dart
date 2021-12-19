@@ -20,7 +20,7 @@ class _GradesPageState extends State<GradesPage> {
     return Scaffold(
       appBar: AppBar(
           title: Text('Calificaciones'),
-          backgroundColor: Colors.green.shade500),
+          backgroundColor: Colors.green.shade600),
       body: Container(
         //color: Colors.grey[100],
         child: SafeArea(
@@ -71,27 +71,31 @@ class _GradesPageState extends State<GradesPage> {
 
                         calificacionesWidgets.add(Card(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           elevation: 1.0,
                           child: Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
+                              borderRadius: BorderRadius.circular(10.0),
                               gradient: LinearGradient(
-                                colors: [
-                                  Colors.white,
-                                  Colors.white10,
-                                  Colors.grey.shade50
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                              ),
+                                  colors: [
+                                    Colors.grey.shade50,
+                                    Colors.white10,
+                                    Colors.white,
+                                  ],
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight),
                             ),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ListTile(
+                                ExpansionTile(
+                                  initiallyExpanded: true,
+                                  trailing: Icon(
+                                    Icons.class__outlined,
+                                    color: Colors.green.shade500,
+                                  ),
                                   title: Text(
                                     '${materias['${j + 1}']['nombre']}',
                                     style: TextStyle(
@@ -100,41 +104,59 @@ class _GradesPageState extends State<GradesPage> {
                                       color: Colors.grey.shade700,
                                       //height: 1.2,
                                     ),
-                                    textAlign: TextAlign.center,
+
+                                    //textAlign: TextAlign.center,
+                                  ),
+                                  leading: Text(
+                                    '${materias['${j + 1}']['calificacion']}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: CalificacionColor(
+                                          '${materias['${j + 1}']['calificacion']}'),
+                                    ),
+                                    //textAlign: TextAlign.center
                                   ),
                                   //alignment: Alignment(-1.1, 0),
 
-                                  // subtitle: Text(
-                                  //     '${materias['${j + 1}']['profesor']}',
-                                  //     style: TextStyle(
-                                  //         fontSize: 14,
-                                  //         color: Colors.grey.shade400),
-                                  //     textAlign: TextAlign.center),
+                                  children: [
+                                    // subtitle:
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      padding: EdgeInsets.only(
+                                          left: 15.0, top: 1.0, bottom: 10.0),
+                                      child: Text(
+                                          '${materias['${j + 1}']['profesor']}',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.grey.shade500),
+                                          textAlign: TextAlign.start),
+                                    )
+                                  ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 3.0),
-                                  child: Text(
-                                      '${materias['${j + 1}']['calificacion']}',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: CalificacionColor(
-                                            '${materias['${j + 1}']['calificacion']}'),
-                                      ),
-                                      textAlign: TextAlign.center),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.only(bottom: 3.0),
+                                //   child:
+
+                                //),
                               ],
                             ),
                           ),
                         ));
                       }
 
+                      var expanded = ((index - 1) ==
+                          (snapshot
+                              .data['estudiante']['cuatrimestres']
+                                  [(index + 1).toString()]
+                              .length));
                       materiasWidget
                         ..add(Card(
                           child: Padding(
                             padding: EdgeInsets.only(
                                 top: 6.0, left: 6.0, right: 6.0, bottom: 6.0),
                             child: ExpansionTile(
+                              initiallyExpanded: expanded,
                               title: Text('Cuatrimestre ${index + 1}',
                                   style: TextStyle(
                                       fontSize: 18,
@@ -158,13 +180,16 @@ class _GradesPageState extends State<GradesPage> {
                                     horizontal: 8.0,
                                   ),
                                   child: SizedBox(
-                                    child: GridView.count(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 1.3,
+                                    child: Column(
                                       children: calificacionesWidgets,
                                     ),
+                                    // GridView.count(
+                                    //   shrinkWrap: true,
+                                    //   physics: NeverScrollableScrollPhysics(),
+                                    //   crossAxisCount: 2,
+                                    //   childAspectRatio: 1.3,
+                                    //   children: calificacionesWidgets,
+                                    // ),
                                   ),
                                 ),
                               ],
@@ -201,12 +226,13 @@ class _GradesPageState extends State<GradesPage> {
   }
 
   Color CalificacionColor(String calificacion) {
+    return Colors.grey.shade900;
     if (calificacion == '10.0') {
-      return Colors.greenAccent.shade700;
+      return Colors.blue;
     } else if (calificacion == '9.0') {
-      return Colors.lightGreen.shade600;
+      return Colors.blue.shade400;
     } else if (calificacion == '8.0') {
-      return Colors.yellow.shade800;
+      return Colors.blue.shade300;
     } else if (calificacion == '7.0') {
       return Colors.red.shade500;
     } else {

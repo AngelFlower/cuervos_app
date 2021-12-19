@@ -37,7 +37,6 @@ dependencies:
   simple_animations: ^4.0.1
   http: ^0.13.4
   html: ^0.15.0
-  webview_flutter: ^3.0.0
   flutter_secure_storage: ^5.0.2
 
 dev_dependencies:

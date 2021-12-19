@@ -46,17 +46,41 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(
         children: [
           Container(
-              margin: const EdgeInsets.only(top: 90),
-              child: const FadeAnimation(
+              margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.15),
+              child: FadeAnimation(
                 2,
-                Text(
-                  "Cuervos",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 3,
-                  ),
+                Column(
+                  children: [
+                    // Padding(
+                    //   padding: const EdgeInsets.only(bottom: 30.0, right: 20.0),
+                    //   child: Image.asset(
+                    //     'assets/images/cuervo_perfil.png',
+                    //     width: MediaQuery.of(context).size.width * 0.2,
+                    //   ),
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Cuervos",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 3,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text('Consulta tus calificaciones',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.white.withOpacity(0.9),
+                          letterSpacing: 0.6,
+                        )),
+                  ],
                 ),
               )),
           Expanded(
@@ -69,7 +93,8 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30))),
-            margin: const EdgeInsets.only(top: 70),
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.13),
             child: _formulario(),
           ))
         ],
@@ -79,67 +104,71 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _formulario() {
     return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const SizedBox(
-            height: 37,
-          ),
-          Container(
-              // color: Colors.red,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(bottom: 15),
-              child: const FadeAnimation(
-                1,
-                Text(
-                  "Inicia sesión",
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                ),
-              )),
-          Form(
-            key: _form,
-            child: Column(
-              children: [
-                FadeAnimation(
+      child: Container(
+        //color: Colors.red,
+        height: MediaQuery.of(context).size.height * 0.68,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              height: 32,
+            ),
+            Container(
+                // color: Colors.red,
+                alignment: Alignment.center,
+                margin: const EdgeInsets.only(bottom: 13),
+                child: const FadeAnimation(
                   1,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: _inputMatricula(),
+                  Text(
+                    "Inicia sesión",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
                   ),
-                ),
-                FadeAnimation(
+                )),
+            Form(
+              key: _form,
+              child: Column(
+                children: [
+                  FadeAnimation(
                     1,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: _inputContrasena(),
-                    )),
-              ],
+                      child: _inputMatricula(),
+                    ),
+                  ),
+                  FadeAnimation(
+                      1,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: _inputContrasena(),
+                      )),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          FadeAnimation(
-            2,
-            _botonIniciarSesion(),
-          ),
-          FadeAnimation(
-            2,
-            Container(
-                width: double.infinity,
-                height: 70,
-                alignment: Alignment.center,
-                margin: const EdgeInsets.only(top: 10),
-                child: const Text(
-                  "Más información sobre esta App",
-                  style: TextStyle(color: Colors.black54, fontSize: 15),
-                )),
-          ),
-        ],
+            const SizedBox(
+              height: 15.0,
+            ),
+            FadeAnimation(
+              2,
+              _botonIniciarSesion(),
+            ),
+            FadeAnimation(
+              2,
+              Container(
+                  width: double.infinity,
+                  height: 40,
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.only(top: 10, bottom: 40),
+                  child: const Text(
+                    "Más información sobre esta App",
+                    style: TextStyle(color: Colors.black54, fontSize: 13),
+                  )),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -147,8 +176,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _inputMatricula() {
     return Container(
         width: double.infinity,
-        height: 70,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.green.shade600, width: 1),
@@ -182,7 +211,8 @@ class _LoginPageState extends State<LoginPage> {
                   maxLines: 1,
                   decoration: InputDecoration(
                       labelStyle: TextStyle(color: Colors.green.shade600),
-                      label: const Text("Matrícula"),
+                      label: const Text("Matrícula",
+                          style: TextStyle(fontSize: 15)),
                       border: InputBorder.none,
                       focusedErrorBorder:
                           const OutlineInputBorder(borderSide: BorderSide.none),
@@ -198,8 +228,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _inputContrasena() {
     return Container(
         width: double.infinity,
-        height: 70,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
             border: Border.all(color: Colors.green.shade600, width: 1),
@@ -233,7 +263,8 @@ class _LoginPageState extends State<LoginPage> {
                   maxLines: 1,
                   decoration: InputDecoration(
                       labelStyle: TextStyle(color: Colors.green.shade600),
-                      label: const Text("Contraseña"),
+                      label: const Text("Contraseña",
+                          style: TextStyle(fontSize: 15)),
                       border: InputBorder.none,
                       focusedErrorBorder:
                           const OutlineInputBorder(borderSide: BorderSide.none),
@@ -279,7 +310,7 @@ class _LoginPageState extends State<LoginPage> {
           child: const Text(
             'Enviar',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               color: Colors.white,
             ),
           ),

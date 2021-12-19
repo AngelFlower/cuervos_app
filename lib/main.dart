@@ -1,5 +1,6 @@
 import 'package:cuervos_app/pages/grades_page.dart';
 import 'package:cuervos_app/saiiut/get_data.dart';
+import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
 import 'pages/login_page.dart';
 import 'pages/home_page.dart';
@@ -14,19 +15,24 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  Future<dynamic> obtenerInfo() async {
-    return await GetData().obtenerDatos();
+  Future<dynamic> obtenerCookie() async {
+    var cookie = await Login().getCookie();
+    print('cookie $cookie');
+    return await Login().getCookie() != null;
   }
 
   @override
   Widget build(BuildContext context) {
+    print('build');
     return FutureBuilder(
-        future: obtenerInfo(),
+        future: obtenerCookie(),
         builder: (context, snapshot) {
+          print('builder');
+          print(snapshot.data);
           if (snapshot.hasData) {
             print('esto es del login, etc ${snapshot.data}');
             var initialRoute = '/login';
-            if (snapshot.hasData != false) {
+            if (snapshot.data != false) {
               initialRoute = '/home';
             }
             print('ruta inicial $initialRoute');
