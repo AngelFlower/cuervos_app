@@ -1,4 +1,4 @@
-package com.example.cuervos_app
+package com.cabisolutions.cuervos
 
 import io.flutter.embedding.android.FlutterActivity
 
