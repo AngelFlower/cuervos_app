@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                   Text(
                     "Inicia sesión",
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),

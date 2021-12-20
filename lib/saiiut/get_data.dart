@@ -40,7 +40,10 @@ class GetData {
 
     Map<String, dynamic> cuatrimestesMap = {};
 
-    for (var i = 1; i < cuatrimestesLista.length; i++) {
+    //print('cuatrimestesLista: ${cuatrimestesLista.length}');
+
+    //for (var i = 1; i < cuatrimestesLista.length; i++) {
+    for (var i = (cuatrimestesLista.length - 1); i > 0; i--) {
       Map<String, dynamic> materiasMap = {};
       var cuatrimestre = cuatrimestesLista[i];
 
@@ -80,8 +83,20 @@ class GetData {
         }
         //print('$materiaNombre $materiaCalificacion, $materiaProfesor');
       }
+
+      String cuatrimestreNombre = materias[0].querySelectorAll('td')[0].text;
+      cuatrimestreNombre =
+          cuatrimestreNombre.replaceFirst(RegExp(r"\s+\b|\b\s"), '');
+      cuatrimestreNombre = cuatrimestreNombre.replaceAll('&nbsp;', '');
+      cuatrimestreNombre = cuatrimestreNombre.replaceAll('\n', '');
+      cuatrimestreNombre = cuatrimestreNombre.replaceAll('        ', '\n');
+
       cuatrimestesMap.addEntries([
-        MapEntry('$i', {'materias': materiasMap, 'promedio': promedio}),
+        MapEntry('$i', {
+          'nombre': cuatrimestreNombre,
+          'materias': materiasMap,
+          'promedio': promedio
+        }),
       ]);
     }
 
@@ -111,6 +126,7 @@ class GetData {
     };
 
     //print(estudiante);
+    //print('cuatrimestres: ${cuatrimestesMap.length}');
     return estudiante;
   }
 }

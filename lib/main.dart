@@ -16,26 +16,19 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   Future<dynamic> obtenerCookie() async {
-    var cookie = await Login().getCookie();
-    print('cookie $cookie');
     return await Login().getCookie() != null;
   }
 
   @override
   Widget build(BuildContext context) {
-    print('build');
     return FutureBuilder(
         future: obtenerCookie(),
         builder: (context, snapshot) {
-          print('builder');
-          print(snapshot.data);
           if (snapshot.hasData) {
-            print('esto es del login, etc ${snapshot.data}');
             var initialRoute = '/login';
             if (snapshot.data != false) {
               initialRoute = '/home';
             }
-            print('ruta inicial $initialRoute');
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               initialRoute: initialRoute,
