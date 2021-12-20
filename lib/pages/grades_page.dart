@@ -33,8 +33,10 @@ class _GradesPageState extends State<GradesPage> {
                 //   'tiene datos ${snapshot.data['estudiante']['cuatrimestres'].length}');
 
                 return ListView.builder(
+                  //reverse: true,
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
+                  //controller: ScrollController(initialScrollOffset: 50000.0),
                   itemCount:
                       snapshot.data['estudiante']['cuatrimestres'].length,
                   itemBuilder: (BuildContext context, int index) {
@@ -44,17 +46,22 @@ class _GradesPageState extends State<GradesPage> {
 
                     //print(
                     //    'index ${snapshot.data['estudiante']['cuatrimestres'][(index + 1).toString()]}');
-                    for (var i = 1;
-                        i <
-                            snapshot
-                                .data['estudiante']['cuatrimestres']
-                                    [(index + 1).toString()]
-                                .length;
-                        i++) {
+
+                    var longitud = snapshot
+                        .data['estudiante']['cuatrimestres']
+                            [(index + 1).toString()]
+                        .length;
+
+                    for (var i = 1; i < longitud; i++) {
+                      print(((longitud + 3) - (index + 1)).toString());
+                      print('---');
+                      print(((index + 1)).toString());
                       // print(
                       //    'index ${snapshot.data['estudiante']['cuatrimestres'][(index + 1).toString()]['materias']}');
                       materias = snapshot.data['estudiante']['cuatrimestres']
-                          [(index + 1).toString()]['materias'];
+                              //[(index + 1).toString()]['materias'];
+                              [((longitud + 3) - (index + 1)).toString()]
+                          ['materias'];
                       //print('materias $materias');
                       // materiasWidget
                       //   ..add(
@@ -145,11 +152,12 @@ class _GradesPageState extends State<GradesPage> {
                         ));
                       }
 
-                      var expanded = ((index - 1) ==
-                          (snapshot
-                              .data['estudiante']['cuatrimestres']
-                                  [(index + 1).toString()]
-                              .length));
+                      // var expanded = ((index - 1) ==
+                      //     (snapshot
+                      //         .data['estudiante']['cuatrimestres']
+                      //             [(index + 1).toString()]
+                      //         .length));
+                      var expanded = index == 0;
                       materiasWidget
                         ..add(Card(
                           child: Padding(
@@ -157,7 +165,8 @@ class _GradesPageState extends State<GradesPage> {
                                 top: 6.0, left: 6.0, right: 6.0, bottom: 6.0),
                             child: ExpansionTile(
                               initiallyExpanded: expanded,
-                              title: Text('Cuatrimestre ${index + 1}',
+                              title: Text(
+                                  'Cuatrimestre ${((longitud + 3) - (index + 1)).toString()}',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
@@ -169,7 +178,7 @@ class _GradesPageState extends State<GradesPage> {
                               leading: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                    '${snapshot.data['estudiante']['cuatrimestres'][(index + 1).toString()]['promedio']}',
+                                    '${snapshot.data['estudiante']['cuatrimestres'][((longitud + 3) - (index + 1)).toString()]['promedio']}',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w400)),

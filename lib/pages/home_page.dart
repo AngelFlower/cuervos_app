@@ -210,39 +210,99 @@ Widget _perfil(BuildContext context, data) {
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 20.0,
+                                    height: 15.0,
                                   ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Container(
-                                          child: Column(
-                                        children: [
-                                          Text(
-                                            'Carrera',
-                                            style: TextStyle(
-                                                color: Colors.grey[400],
-                                                fontSize: 14.0),
-                                          ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.7,
-                                            child: Text(
-                                              '${data["estudiante"]["datos"]["carrera"]}',
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'Promedio General',
                                               style: TextStyle(
-                                                fontSize: 14.0,
-                                              ),
-                                              textAlign: TextAlign.center,
+                                                  color: Colors.grey.shade400,
+                                                  fontSize: 14.0),
                                             ),
-                                          )
-                                        ],
-                                      )),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            SizedBox(
+                                              child: Text(
+                                                '${data["estudiante"]["datos"]["promedio_general"]}',
+                                                //'9.6',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'Estatus',
+                                              style: TextStyle(
+                                                  color: Colors.grey.shade400,
+                                                  fontSize: 14.0),
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            SizedBox(
+                                              child: Text(
+                                                '${data["estudiante"]["datos"]["situacion_academica"]}',
+                                                //'9.6',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'Carrera',
+                                              style: TextStyle(
+                                                  color: Colors.grey[400],
+                                                  fontSize: 14.0),
+                                            ),
+                                            SizedBox(
+                                              height: 5.0,
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.7,
+                                              child: Text(
+                                                '${data["estudiante"]["datos"]["carrera"]}',
+                                                style: TextStyle(
+                                                  fontSize: 14.0,
+                                                ),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ],

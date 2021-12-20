@@ -36,6 +36,7 @@ class GetData {
 
     var cuatrimestesLista = calificacionesTabla.querySelectorAll('table');
     var promedio = '';
+    var promedioGeneral = '';
 
     Map<String, dynamic> cuatrimestesMap = {};
 
@@ -67,6 +68,9 @@ class GetData {
           //print('materia');
         }
         if (i == cuatrimestesLista.length - 1) {
+          if (j == materias.length - 1) {
+            promedioGeneral = materia.querySelectorAll('td')[1].text;
+          }
           if (materias.length - 2 == j) {
             promedio = materia.querySelectorAll('td')[1].text;
           }
@@ -98,8 +102,9 @@ class GetData {
       'cuatrimiestre': datos[11].text,
       'grupo': datos[12].text,
       'situacion_academica': datos[13].text,
+      'promedio_general': promedioGeneral,
     };
-    //print(datosAlumno);
+    //print(datosEstudiante);
 
     Map<String, dynamic> estudiante = {
       'estudiante': {'datos': datosEstudiante, 'cuatrimestres': cuatrimestesMap}

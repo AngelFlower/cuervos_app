@@ -46,8 +46,10 @@ class _AppState extends State<App> {
               },
             );
           } else {
-            return Center(
-              child: CircularProgressIndicator(),
+            return Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           }
         });
