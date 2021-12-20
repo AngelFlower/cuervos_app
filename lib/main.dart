@@ -1,11 +1,16 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:cuervos_app/pages/grades_page.dart';
-import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
 import 'pages/login_page.dart';
 import 'pages/home_page.dart';
 
-void main() async => runApp(App());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Initialize without device test ids.
+  Admob.initialize();
+  runApp(App());
+}
 
 class App extends StatefulWidget {
   App({Key? key}) : super(key: key);

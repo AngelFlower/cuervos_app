@@ -16,7 +16,6 @@ class _GradesPageState extends State<GradesPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool _expanded = true;
     return Scaffold(
       appBar: AppBar(
           title: Text('Calificaciones'),

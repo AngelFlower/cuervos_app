@@ -4,6 +4,9 @@
    <application
         android:label="Cuervos"
         android:icon="@mipmap/launcher_icon">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8599507150034665~3014364971"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
