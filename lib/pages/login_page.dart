@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                   alignment: Alignment.center,
                   margin: const EdgeInsets.only(top: 10, bottom: 40),
                   child: const Text(
-                    "Más información sobre esta App",
+                    "No almacenamos ninguna información",
                     style: TextStyle(color: Colors.black54, fontSize: 13),
                   )),
             ),
