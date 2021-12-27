@@ -50,20 +50,19 @@ class GetData {
       var materias = cuatrimestre.querySelectorAll('tr');
       for (var j = 1; j < materias.length; j++) {
         var materia = materias[j];
-        //print(materia.outerHtml);
+
         var materiaNombre = materia.querySelectorAll('td')[0].text;
         var materiaProfesor = materia.querySelectorAll('td')[1].text;
         var materiaCalificacion = '';
         if (materia.querySelectorAll('td').length > 4) {
-          materiaCalificacion = materia.querySelectorAll('td')[5].text;
+          materiaCalificacion = materia.querySelectorAll('td').last.text;
           if (j != 1) {
             materiasMap.addEntries([
               MapEntry('${j - 1}', {
                 'nombre': materiaNombre.replaceFirst(RegExp(r"\s+\b|\b\s"), ''),
                 'profesor':
                     materiaProfesor.replaceFirst(RegExp(r"\s+\b|\b\s"), ''),
-                'calificacion':
-                    materiaCalificacion.replaceFirst(RegExp(r"\s+\b|\b\s"), '')
+                'calificacion': materiaCalificacion.toString(),
               }),
             ]);
           }

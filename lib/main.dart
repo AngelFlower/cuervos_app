@@ -46,10 +46,8 @@ class _AppState extends State<App> {
               },
             );
           } else {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
+            return Center(
+              child: CircularProgressIndicator(),
             );
           }
         });

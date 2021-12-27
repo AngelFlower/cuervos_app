@@ -4,7 +4,7 @@
    <application
         android:label="Cuervos"
         android:icon="@mipmap/launcher_icon"
-        android:name="androidx.multidex.MultiDexApplication" >>
+        android:name="androidx.multidex.MultiDexApplication">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8599507150034665~3014364971"/>
