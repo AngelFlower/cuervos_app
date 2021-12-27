@@ -1,6 +1,5 @@
 import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class GradesPage extends StatefulWidget {
   GradesPage({Key? key}) : super(key: key);
@@ -40,7 +39,6 @@ class _GradesPageState extends State<GradesPage> {
                       snapshot.data['estudiante']['cuatrimestres'].length,
                   itemBuilder: (BuildContext context, int index) {
                     dynamic materias;
-                    List<Widget> materiasWidget = [];
                     List<Widget> calificacionesWidgets = [];
 
                     //print(

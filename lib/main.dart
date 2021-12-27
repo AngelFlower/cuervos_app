@@ -1,4 +1,4 @@
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'package:cuervos_app/pages/grades_page.dart';
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +6,9 @@ import 'pages/login_page.dart';
 import 'pages/home_page.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
   // Initialize without device test ids.
-  Admob.initialize();
+  // Admob.initialize();
   runApp(App());
 }
 

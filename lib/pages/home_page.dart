@@ -2,7 +2,7 @@ import 'package:cuervos_app/helpers/ad_helper.dart';
 import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -20,51 +20,52 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // back button
-        body: Container(
-          color: Colors.grey.shade200,
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
-            children: [
-              FutureBuilder<dynamic>(
-                  future: obtenerInfo(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return _perfil(context, snapshot.data);
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
-              Positioned(
-                top: 0.0,
-                left: 0.0,
-                right: 0.0,
-                child: AppBar(
-                  title: Text(''), // You can add title here
-                  leading: IconButton(
-                    tooltip: 'Cerrar sesión',
-                    icon: Icon(Icons.exit_to_app, color: Colors.white70),
-                    onPressed: () {
-                      Login().deleteCookie();
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/login', (Route<dynamic> route) => false);
-                    },
-                  ),
-                  backgroundColor: Colors.blue
-                      .withOpacity(0.0), //You can make this transparent
-                  elevation: 0.0, //No shadow
+      // back button
+      body: Container(
+        color: Colors.grey.shade200,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: [
+            FutureBuilder<dynamic>(
+                future: obtenerInfo(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return _perfil(context, snapshot.data);
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                }),
+            Positioned(
+              top: 0.0,
+              left: 0.0,
+              right: 0.0,
+              child: AppBar(
+                title: Text(''), // You can add title here
+                leading: IconButton(
+                  tooltip: 'Cerrar sesión',
+                  icon: Icon(Icons.exit_to_app, color: Colors.white70),
+                  onPressed: () {
+                    Login().deleteCookie();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        '/login', (Route<dynamic> route) => false);
+                  },
                 ),
+                backgroundColor: Colors.blue
+                    .withOpacity(0.0), //You can make this transparent
+                elevation: 0.0, //No shadow
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        bottomNavigationBar: Container(
-          child: AdmobBanner(
-            adUnitId: AdHelper.bannerAdUnitId,
-            adSize: AdmobBannerSize.BANNER,
-            listener: (AdmobAdEvent event, Map<String, dynamic>? args) {},
-          ),
-        ));
+      ),
+      // bottomNavigationBar: Container(
+      //   child: AdmobBanner(
+      //     adUnitId: AdHelper.bannerAdUnitId,
+      //     adSize: AdmobBannerSize.BANNER,
+      //     listener: (AdmobAdEvent event, Map<String, dynamic>? args) {},
+      //   ),
+      // )
+    );
   }
 }
 

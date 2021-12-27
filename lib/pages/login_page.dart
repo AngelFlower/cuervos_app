@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _inputMatricula() {
     return Container(
         width: double.infinity,
-        height: 60,
+        height: 55,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
         decoration: BoxDecoration(
