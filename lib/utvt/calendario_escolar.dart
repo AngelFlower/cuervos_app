@@ -5,9 +5,9 @@ class CalendarioEscolar {
   Future<String> obtenerCalendario() async {
     var peticion = await _peticionCalendario();
     if (peticion != 'Error al obtener el calendario') {
-      peticion = 'https://utvt.edomex.gob.mx/$peticion';
+      peticion = 'https://utvt.edomex.gob.mx$peticion';
     }
-    print(peticion);
+    // print(peticion);
     return peticion;
   }
 

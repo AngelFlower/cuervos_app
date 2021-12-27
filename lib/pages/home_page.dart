@@ -93,28 +93,27 @@ Widget _perfil(BuildContext context, data) {
 Container consultaWidget(BuildContext context) {
   return Container(
     color: Colors.grey.shade200,
-    padding: EdgeInsets.symmetric(horizontal: 20.0),
+    padding: const EdgeInsets.symmetric(horizontal: 20.0),
     child: Center(
         child: Card(
             elevation: 2.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 45.0),
-            child: Container(
-                //height: ,
-                child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+            margin: const EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 45.0),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Consulta",
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 1.0,
                   ),
                   Text(
@@ -128,64 +127,127 @@ Container consultaWidget(BuildContext context) {
                   Divider(
                     color: Colors.grey[300],
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green.shade400,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      elevation: 10.0,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/grades');
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.school,
-                            color: Colors.black45,
-                            size: 35.0,
-                          ),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Calificaciones",
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 2.0,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                child: Text(
-                                  "Consulta por cuatrimestre",
-                                  style: TextStyle(
-                                    fontSize: 13.0,
-                                    color: Colors.white70,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+                  _botonCalificaciones(context),
+                  Divider(
+                    color: Colors.grey[300],
                   ),
-                  SizedBox(
+                  _botonCalendario(context),
+                  const SizedBox(
                     height: 20.0,
                   ),
                 ],
               ),
-            )))),
+            ))),
+  );
+}
+
+ElevatedButton _botonCalificaciones(BuildContext context) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      primary: Colors.green.shade400,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      elevation: 10.0,
+    ),
+    onPressed: () {
+      Navigator.pushNamed(context, '/grades');
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(
+            Icons.school,
+            color: Colors.black45,
+            size: 35.0,
+          ),
+          SizedBox(
+            width: 20.0,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Calificaciones",
+                style: TextStyle(
+                  fontSize: 14.0,
+                ),
+              ),
+              SizedBox(
+                height: 2.0,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.45,
+                child: Text(
+                  "Consulta por cuatrimestre",
+                  style: TextStyle(
+                    fontSize: 13.0,
+                    color: Colors.white70,
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+ElevatedButton _botonCalendario(BuildContext context) {
+  return ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      primary: Colors.green.shade400,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      elevation: 10.0,
+    ),
+    onPressed: () {
+      Navigator.pushNamed(context, '/calendario');
+    },
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(
+            Icons.calendar_today,
+            color: Colors.black45,
+            size: 35.0,
+          ),
+          SizedBox(
+            width: 20.0,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Calendario",
+                style: TextStyle(
+                  fontSize: 14.0,
+                ),
+              ),
+              SizedBox(
+                height: 2.0,
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.45,
+                child: Text(
+                  "Calendario escolar",
+                  style: TextStyle(
+                    fontSize: 13.0,
+                    color: Colors.white70,
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
   );
 }
 
