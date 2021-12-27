@@ -2,7 +2,9 @@
 import 'package:cuervos_app/pages/grades_page.dart';
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
+import 'pages/calendario_page.dart';
 import 'pages/login_page.dart';
+import 'pages/grades_page.dart';
 import 'pages/home_page.dart';
 
 void main() async {
@@ -41,13 +43,12 @@ class _AppState extends State<App> {
                 '/login': (BuildContext context) => LoginPage(),
                 '/home': (BuildContext context) => HomePage(),
                 '/grades': (BuildContext context) => GradesPage(),
+                '/calendario': (BuildContext context) => CalendarioPage(),
               },
             );
           } else {
-            return Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+            return Center(
+              child: CircularProgressIndicator(),
             );
           }
         });
