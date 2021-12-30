@@ -38,11 +38,12 @@ dependencies:
   http: ^0.13.4
   html: ^0.15.0
   flutter_secure_storage: ^5.0.2
-  change_app_package_name: ^1.0.0
+  # change_app_package_name: ^1.0.0
   admob_flutter: ^2.0.0
   photo_view: ^0.13.0
   share_plus: ^3.0.4
   path_provider: ^2.0.8
+  comment_box: ^0.0.16
 
 dev_dependencies:
   flutter_test:

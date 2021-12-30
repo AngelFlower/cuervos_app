@@ -78,66 +78,79 @@ class _GradesPageState extends State<GradesPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        elevation: 1.0,
+                        elevation: 1.5,
                         child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            gradient: LinearGradient(
-                                colors: [
-                                  Colors.grey.shade50,
-                                  Colors.white10,
-                                  Colors.white,
-                                ],
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight),
-                          ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ExpansionTile(
-                                initiallyExpanded: true,
-                                trailing: Icon(
-                                  Icons.class__outlined,
-                                  color: Colors.green.shade500,
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/comentarios',
+                                      arguments: {
+                                        'profesor':
+                                            '${materias['${j + 1}']['profesor']}'
+                                      });
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.white),
+                                  elevation: MaterialStateProperty.all(0.1),
+                                  overlayColor: MaterialStateProperty.all(
+                                      Colors.grey.shade100),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0))),
+                                  padding: MaterialStateProperty.all(
+                                      EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 2)),
                                 ),
-                                title: Text(
-                                  '${materias['${j + 1}']['nombre']}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey.shade700,
-                                    //height: 1.2,
-                                  ),
-
-                                  //textAlign: TextAlign.center,
-                                ),
-                                leading: Text(
-                                  '${materias['${j + 1}']['calificacion']}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: calificacionColor(
-                                        '${materias['${j + 1}']['calificacion']}'),
-                                  ),
-                                  //textAlign: TextAlign.center
-                                ),
-                                //alignment: Alignment(-1.1, 0),
-
-                                children: [
-                                  // subtitle:
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    padding: EdgeInsets.only(
-                                        left: 15.0, top: 1.0, bottom: 10.0),
-                                    child: Text(
-                                        '${materias['${j + 1}']['profesor']}',
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      trailing: Icon(
+                                        Icons.class__outlined,
+                                        color: Colors.green.shade500,
+                                      ),
+                                      title: Text(
+                                        '${materias['${j + 1}']['nombre']}',
                                         style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey.shade500),
-                                        textAlign: TextAlign.start),
-                                  )
-                                ],
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.grey.shade700,
+                                          //height: 1.2,
+                                        ),
+
+                                        //textAlign: TextAlign.center,
+                                      ),
+                                      leading: Text(
+                                        '${materias['${j + 1}']['calificacion']}',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: calificacionColor(
+                                              '${materias['${j + 1}']['calificacion']}'),
+                                        ),
+                                        //textAlign: TextAlign.center
+                                      ),
+                                      //alignment: Alignment(-1.1, 0),
+
+                                      // subtitle:
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      padding: EdgeInsets.only(
+                                          left: 16.0, top: 1.0, bottom: 10.0),
+                                      child: Text(
+                                          '${materias['${j + 1}']['profesor']}',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.grey.shade500),
+                                          textAlign: TextAlign.start),
+                                    )
+                                  ],
+                                ),
                               ),
                               // Padding(
                               //   padding: const EdgeInsets.only(bottom: 3.0),
