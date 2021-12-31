@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cuervos_app/libs/fade_animation.dart';
 
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
@@ -250,6 +251,8 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.only(left: 10, top: 5),
                 alignment: Alignment.center,
                 child: TextFormField(
+                  maxLength: 10,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   controller: contrasenaController,
                   validator: (text) {
                     if (contrasenaController.text.isEmpty) {
