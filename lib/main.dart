@@ -37,6 +37,7 @@ class _AppState extends State<App> {
               initialRoute = '/home';
             }
             return MaterialApp(
+              darkTheme: ThemeData.dark(),
               debugShowCheckedModeBanner: false,
               initialRoute: initialRoute,
               routes: {

@@ -54,7 +54,24 @@ class GetData {
         var materiaNombre = materia.querySelectorAll('td')[0].text;
         var materiaProfesor = materia.querySelectorAll('td')[1].text;
         var materiaCalificacion = '';
+
         if (materia.querySelectorAll('td').length > 4) {
+          var parciales = {
+            'parcial1': materia.querySelectorAll('td')[2].text,
+            'parcial2': materia.querySelectorAll('td')[3].text,
+            'parcial3': materia.querySelectorAll('td')[4].text,
+          };
+
+          var extras = {
+            'extra1': materia.querySelectorAll('td')[6].text,
+            'extra2': null,
+            'extra3': null,
+          };
+
+          if (materia.querySelectorAll('td').length == 9) {
+            extras['extra2'] = materia.querySelectorAll('td')[7].text;
+          }
+
           materiaCalificacion = materia.querySelectorAll('td').last.text;
           if (j != 1) {
             materiasMap.addEntries([
@@ -63,6 +80,9 @@ class GetData {
                 'profesor':
                     materiaProfesor.replaceFirst(RegExp(r"\s+\b|\b\s"), ''),
                 'calificacion': materiaCalificacion.toString(),
+                'parciales': parciales,
+                'extras': extras,
+                'existenExtras': _existenExtras(extras),
               }),
             ]);
           }
@@ -127,5 +147,21 @@ class GetData {
     //print(estudiante);
     //print('cuatrimestres: ${cuatrimestesMap.length}');
     return estudiante;
+  }
+
+  dynamic _existenExtras(dynamic extras) {
+    if (_isNull(extras['extra1']) &&
+        _isNull(extras['extra2']) &&
+        _isNull(extras['extra3'])) {
+      return false;
+    }
+    return true;
+  }
+
+  dynamic _isNull(dynamic value) {
+    if (value == null || value == '') {
+      return true;
+    } else
+      return false;
   }
 }
