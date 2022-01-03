@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 
 class Login {
   final storage = const FlutterSecureStorage();
+
   void login(
       {required String matricula,
       required String contrasena,
@@ -30,10 +31,6 @@ class Login {
                     ),
                   ],
                 ));
-        // } else {
-        //   obtenerCalificaciones(datosUri, response, context);
-        // }
-        //});
       } else {
         storeCookie(response.headers['set-cookie'].toString());
         Navigator.pushReplacementNamed(context, '/home');

@@ -1,13 +1,12 @@
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
 import 'package:cuervos_app/libs/fade_animation.dart';
-
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -17,15 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController matriculaController = TextEditingController();
   TextEditingController contrasenaController = TextEditingController();
   final _form = GlobalKey<FormState>();
-
-  bool _saveForm() {
-    final isValid = _form.currentState!.validate();
-
-    if (!isValid) {
-      return false;
-    }
-    return isValid;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,25 +38,18 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Container(
               margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.15),
+                  top: MediaQuery.of(context).size.height * 0.12),
               child: FadeAnimation(
                 2,
                 Column(
                   children: [
-                    // Padding(
-                    //   padding: const EdgeInsets.only(bottom: 30.0, right: 20.0),
-                    //   child: Image.asset(
-                    //     'assets/images/cuervo_perfil.png',
-                    //     width: MediaQuery.of(context).size.width * 0.2,
-                    //   ),
-                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Cuervos",
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 40,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                             letterSpacing: 3,
@@ -86,14 +69,12 @@ class _LoginPageState extends State<LoginPage> {
               )),
           Expanded(
               child: Container(
-            width: double.infinity,
-            height: double.infinity,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30))),
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40))),
             margin:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.13),
             child: _formulario(),
@@ -105,8 +86,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _formulario() {
     return SingleChildScrollView(
+      // ignore: sized_box_for_whitespace
       child: Container(
-        //color: Colors.red,
         height: MediaQuery.of(context).size.height * 0.68,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -123,12 +104,15 @@ class _LoginPageState extends State<LoginPage> {
                   Text(
                     "Inicia sesión",
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
                   ),
                 )),
+            const SizedBox(
+              height: 20,
+            ),
             Form(
               key: _form,
               child: Column(
@@ -140,6 +124,9 @@ class _LoginPageState extends State<LoginPage> {
                       child: _inputMatricula(),
                     ),
                   ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   FadeAnimation(
                       1,
                       Padding(
@@ -150,19 +137,19 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(
-              height: 15.0,
+              height: 40.0,
             ),
             FadeAnimation(
               2,
               _botonIniciarSesion(),
             ),
+            const Spacer(),
             FadeAnimation(
               2,
               Container(
                   width: double.infinity,
-                  height: 40,
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.only(top: 10, bottom: 40),
+                  margin: const EdgeInsets.only(bottom: 40),
                   child: const Text(
                     "No almacenamos ninguna información",
                     style: TextStyle(color: Colors.black54, fontSize: 13),
@@ -186,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
               BoxShadow(
                   color: Colors.green.shade800,
                   blurRadius: 2,
-                  offset: Offset(1, 1))
+                  offset: const Offset(1, 1))
             ],
             color: Colors.white,
             borderRadius: const BorderRadius.all(Radius.circular(20))),
@@ -200,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextFormField(
                   controller: matriculaController,
                   validator: (text) {
-                    if (!(matriculaController.text.length > 5)) {
+                    if (!(text!.length > 5)) {
                       return "Matrícula demasiado corta";
                     }
                     return null;
@@ -238,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
               BoxShadow(
                   color: Colors.green.shade800,
                   blurRadius: 2,
-                  offset: Offset(1, 1)),
+                  offset: const Offset(1, 1)),
             ],
             color: Colors.white,
             borderRadius: const BorderRadius.all(Radius.circular(20))),
@@ -251,11 +238,9 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.only(left: 10, top: 5),
                 alignment: Alignment.center,
                 child: TextFormField(
-                  maxLength: 10,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   controller: contrasenaController,
                   validator: (text) {
-                    if (contrasenaController.text.isEmpty) {
+                    if (text!.isEmpty) {
                       return "La contraseña no puede estar vacia";
                     }
                     return null;
@@ -285,11 +270,13 @@ class _LoginPageState extends State<LoginPage> {
       onPressed: () {
         //Navigator.push(
         //    context, MaterialPageRoute(builder: (context) => GradesPage()));
+        if (_form.currentState!.validate()) {
+          Login().login(
+              context: context,
+              matricula: matriculaController.text.toString(),
+              contrasena: contrasenaController.text.toString());
+        }
 
-        Login().login(
-            context: context,
-            matricula: matriculaController.text.toString(),
-            contrasena: contrasenaController.text.toString());
         //Navigator.pushNamed(context, '/home');
       },
       style: ElevatedButton.styleFrom(
