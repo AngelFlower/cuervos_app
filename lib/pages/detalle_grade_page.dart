@@ -7,133 +7,141 @@ class DetalleGradePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final arguments = ModalRoute.of(context)?.settings.arguments as Map;
-    final controller = PageController();
 
-    if (arguments != null) print(arguments['parciales']);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-      ),
-      extendBodyBehindAppBar: true,
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-              Colors.green.shade600,
-              Colors.green.shade800,
-            ])),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 55.0),
-              child: SvgPicture.asset(
-                'assets/svg/undraw_professor.svg',
-                height: MediaQuery.of(context).size.height * 0.32,
+    // ignore: unnecessary_null_comparison
+    if (arguments != null) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+        extendBodyBehindAppBar: true,
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                Colors.green.shade600,
+                Colors.green.shade800,
+              ])),
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 55.0),
+                child: SvgPicture.asset(
+                  'assets/svg/undraw_professor.svg',
+                  height: MediaQuery.of(context).size.height * 0.32,
+                ),
               ),
-            ),
-            Card(
-              color: Colors.white.withOpacity(0.97),
-              elevation: 1.0,
-              margin: const EdgeInsets.all(0),
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
-              )),
-              child: Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: SingleChildScrollView(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        const Text(
-                          'Detalle de calificaciones',
-                          style: TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        Text('${arguments['materia']}'),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        DefaultTabController(
-                          length: 2,
-                          child:
-                              Column(mainAxisSize: MainAxisSize.min, children: [
-                            const TabBar(
-                              labelColor: Colors.black87,
-                              indicatorColor: Colors.green,
-                              tabs: [
-                                Tab(
-                                  text: 'Parciales',
-                                ),
-                                Tab(
-                                  text: 'Extras',
-                                ),
-                              ],
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 100,
-                              margin:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              child: TabBarView(
+              Card(
+                color: Colors.white.withOpacity(0.97),
+                elevation: 1.0,
+                margin: const EdgeInsets.all(0),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
+                )),
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: SingleChildScrollView(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          const Text(
+                            'Detalle de calificaciones',
+                            style: TextStyle(
+                                fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          Text('${arguments['materia']}'),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          DefaultTabController(
+                            length: 2,
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      _parcialWidget(
-                                          context,
-                                          'Parcial 1',
-                                          arguments['parciales']['parcial1'],
-                                          Colors.purple.shade50),
-                                      _parcialWidget(
-                                          context,
-                                          'Parcial 2',
-                                          arguments['parciales']['parcial2'],
-                                          Colors.amber.shade50),
-                                      _parcialWidget(
-                                          context,
-                                          'Parcial 3',
-                                          arguments['parciales']['parcial3'],
-                                          Colors.green.shade50),
+                                  const TabBar(
+                                    labelColor: Colors.black87,
+                                    indicatorColor: Colors.green,
+                                    tabs: [
+                                      Tab(
+                                        text: 'Parciales',
+                                      ),
+                                      Tab(
+                                        text: 'Extras',
+                                      ),
                                     ],
                                   ),
-                                  _extrasWidget(context, arguments),
-                                ],
-                              ),
-                            ),
-                          ]),
-                        ),
-                      ],
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 100,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 15.0),
+                                    child: TabBarView(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            _parcialWidget(
+                                                context,
+                                                'Parcial 1',
+                                                arguments['parciales']
+                                                    ['parcial1'],
+                                                Colors.purple.shade50),
+                                            _parcialWidget(
+                                                context,
+                                                'Parcial 2',
+                                                arguments['parciales']
+                                                    ['parcial2'],
+                                                Colors.amber.shade50),
+                                            _parcialWidget(
+                                                context,
+                                                'Parcial 3',
+                                                arguments['parciales']
+                                                    ['parcial3'],
+                                                Colors.green.shade50),
+                                          ],
+                                        ),
+                                        _extrasWidget(context, arguments),
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                          ),
+                        ],
+                      )),
                     )),
-                  )),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return CircularProgressIndicator();
+    }
   }
 
   dynamic _isEmpty(dynamic value) {
     if (value == null || value == '') {
       return '-';
-    } else
+    } else {
       return value;
+    }
   }
 
   Row _extrasWidget(BuildContext context, arguments) {
