@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
                       return _perfil(context, snapshot.data);
                     } else {
                       // return const ShimmerLoading();
-                      return CircularProgressIndicator();
+                      return const Center(child: CircularProgressIndicator());
                     }
                   }),
               Positioned(

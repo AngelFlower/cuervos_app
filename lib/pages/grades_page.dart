@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class GradesPage extends StatefulWidget {
-  GradesPage({Key? key}) : super(key: key);
+  const GradesPage({Key? key}) : super(key: key);
 
   @override
   _GradesPageState createState() => _GradesPageState();
@@ -18,46 +18,43 @@ class _GradesPageState extends State<GradesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Calificaciones'),
+          title: const Text('Calificaciones'),
           backgroundColor: Colors.green.shade700),
-      body: Container(
-        child: SafeArea(
-          child: FutureBuilder(
-            future: obtenerInfo(),
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount:
-                      snapshot.data['estudiante']['cuatrimestres'].length,
-                  itemBuilder: (BuildContext context, int index) {
-                    dynamic materias;
-                    List<Widget> calificacionesWidgets = [];
+      body: SafeArea(
+        child: FutureBuilder(
+          future: obtenerInfo(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: snapshot.data['estudiante']['cuatrimestres'].length,
+                itemBuilder: (BuildContext context, int index) {
+                  dynamic materias;
+                  List<Widget> calificacionesWidgets = [];
 
-                    var longitud =
-                        snapshot.data['estudiante']['cuatrimestres'].length;
+                  var longitud =
+                      snapshot.data['estudiante']['cuatrimestres'].length;
 
-                    materias = snapshot.data['estudiante']['cuatrimestres']
-                        [(longitud - index).toString()]['materias'];
+                  materias = snapshot.data['estudiante']['cuatrimestres']
+                      [(longitud - index).toString()]['materias'];
 
-                    for (var j = 0; j < materias.length; j++) {
-                      calificacionesWidgets.add(_cardMateria(materias, j));
-                    }
+                  for (var j = 0; j < materias.length; j++) {
+                    calificacionesWidgets.add(_cardMateria(materias, j));
+                  }
 
-                    var expanded = index == 0;
+                  var expanded = index == 0;
 
-                    return _cardCuatrimestre(expanded, snapshot, longitud,
-                        index, calificacionesWidgets);
-                  },
-                );
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
+                  return _cardCuatrimestre(expanded, snapshot, longitud, index,
+                      calificacionesWidgets);
+                },
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
       ),
     );
@@ -67,9 +64,9 @@ class _GradesPageState extends State<GradesPage> {
       longitud, int index, List<Widget> calificacionesWidgets) {
     return Card(
       child: Padding(
-        padding: EdgeInsets.only(top: 6.0, left: 6.0, right: 6.0, bottom: 6.0),
+        padding:
+            const EdgeInsets.only(top: 6.0, left: 6.0, right: 6.0, bottom: 6.0),
         child: ExpansionTile(
-          initiallyExpanded: expanded,
           title: Text(
               '${snapshot.data['estudiante']['cuatrimestres'][(longitud - (index)).toString()]['nombre']}',
               style: TextStyle(
@@ -80,11 +77,12 @@ class _GradesPageState extends State<GradesPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 '${snapshot.data['estudiante']['cuatrimestres'][(longitud - (index)).toString()]['promedio']}',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
           ),
           children: <Widget>[
             SafeArea(
-              minimum: EdgeInsets.symmetric(
+              minimum: const EdgeInsets.symmetric(
                 horizontal: 8.0,
               ),
               child: SizedBox(
@@ -99,89 +97,114 @@ class _GradesPageState extends State<GradesPage> {
     );
   }
 
-  Card _cardMateria(materias, int j) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+  Widget _cardMateria(materias, int j) {
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey, width: 0.5),
+        ),
       ),
-      elevation: 1.0,
+      child: ListTile(
+        onTap: () {
+          Navigator.pushNamed(context, '/detalleMateria', arguments: {
+            'materia': materias['${j + 1}']['nombre'],
+            'parciales': materias['${j + 1}']['parciales'],
+            'extras': materias['${j + 1}']['extras'],
+            'existenExtras': materias['${j + 1}']['existenExtras'],
+          });
+        },
+        subtitle: Text(
+          '${materias['${j + 1}']['profesor']}',
+        ),
+        trailing: Icon(
+          Icons.arrow_forward,
+          color: _colorExtra(materias['${j + 1}']['existenExtras']),
+        ),
+        title: Text(
+          '${materias['${j + 1}']['nombre']}',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: Colors.grey.shade700,
+          ),
+        ),
+        leading: Text(
+          '${materias['${j + 1}']['calificacion']}',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: calificacionColor('${materias['${j + 1}']['calificacion']}'),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _cardMateria1(materias, int j) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/detalleMateria', arguments: {
+          'materia': materias['${j + 1}']['nombre'],
+          'parciales': materias['${j + 1}']['parciales'],
+          'extras': materias['${j + 1}']['extras'],
+          'existenExtras': materias['${j + 1}']['existenExtras'],
+        });
+      },
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
           gradient: LinearGradient(colors: [
             Colors.grey.shade50,
             Colors.white10,
             Colors.white,
           ], begin: Alignment.centerLeft, end: Alignment.centerRight),
         ),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/detalleMateria', arguments: {
-              'materia': materias['${j + 1}']['nombre'],
-              'parciales': materias['${j + 1}']['parciales'],
-              'extras': materias['${j + 1}']['extras'],
-              'existenExtras': materias['${j + 1}']['existenExtras'],
-            });
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(
-                Colors.white.withOpacity(0.97)),
-            overlayColor: MaterialStateProperty.all<Color>(
-              Colors.grey.shade100,
-            ),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              trailing: Icon(
+                Icons.book,
+                color: _colorExtra(materias['${j + 1}']['existenExtras']),
               ),
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                trailing: Icon(
-                  Icons.book,
-                  color: _colorExtra(materias['${j + 1}']['existenExtras']),
-                ),
-                title: Text(
-                  '${materias['${j + 1}']['nombre']}',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-                leading: Text(
-                  '${materias['${j + 1}']['calificacion']}',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: calificacionColor(
-                        '${materias['${j + 1}']['calificacion']}'),
-                  ),
+              title: Text(
+                '${materias['${j + 1}']['nombre']}',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey.shade700,
                 ),
               ),
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(left: 15.0, top: 1.0, bottom: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('${materias['${j + 1}']['profesor']}',
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.grey.shade500),
-                        textAlign: TextAlign.start),
-                    Icon(
-                      Icons.arrow_forward,
-                      color: Colors.grey.shade600,
-                      size: 20.0,
-                    ),
-                  ],
+              leading: Text(
+                '${materias['${j + 1}']['calificacion']}',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: calificacionColor(
+                      '${materias['${j + 1}']['calificacion']}'),
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              padding:
+                  const EdgeInsets.only(left: 15.0, top: 1.0, bottom: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('${materias['${j + 1}']['profesor']}',
+                      style:
+                          TextStyle(fontSize: 14, color: Colors.grey.shade500),
+                      textAlign: TextAlign.start),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.grey.shade600,
+                    size: 20.0,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
