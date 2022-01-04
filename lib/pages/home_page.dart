@@ -1,11 +1,12 @@
 import 'package:cuervos_app/helpers/ad_helper.dart';
+import 'package:cuervos_app/libs/shimmer_animation.dart';
 import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
 import 'package:admob_flutter/admob_flutter.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -32,7 +33,8 @@ class _HomePageState extends State<HomePage> {
                     if (snapshot.hasData) {
                       return _perfil(context, snapshot.data);
                     } else {
-                      return Center(child: CircularProgressIndicator());
+                      // return const ShimmerLoading();
+                      return CircularProgressIndicator();
                     }
                   }),
               Positioned(
@@ -40,16 +42,20 @@ class _HomePageState extends State<HomePage> {
                 left: 0.0,
                 right: 0.0,
                 child: AppBar(
-                  title: Text(''), // You can add title here
-                  leading: IconButton(
-                    tooltip: 'Cerrar sesión',
-                    icon: Icon(Icons.exit_to_app, color: Colors.white70),
-                    onPressed: () {
-                      Login().deleteCookie();
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/login', (Route<dynamic> route) => false);
-                    },
-                  ),
+                  // You can add title here
+                  actions: [
+                    GestureDetector(
+                        onTap: () {
+                          Login().deleteCookie();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/login', (Route<dynamic> route) => false);
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Icon(Icons.exit_to_app, color: Colors.white70),
+                        )),
+                  ],
+
                   backgroundColor: Colors.blue
                       .withOpacity(0.0), //You can make this transparent
                   elevation: 0.0, //No shadow
@@ -132,6 +138,9 @@ Container consultaWidget(BuildContext context) {
                     color: Colors.grey[300],
                   ),
                   _botonCalendario(context),
+                  Divider(
+                    color: Colors.grey[300],
+                  ),
                   const SizedBox(
                     height: 20.0,
                   ),
@@ -153,44 +162,31 @@ ElevatedButton _botonCalificaciones(BuildContext context) {
     onPressed: () {
       Navigator.pushNamed(context, '/grades');
     },
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.school,
-            color: Colors.black45,
-            size: 35.0,
-          ),
-          SizedBox(
-            width: 20.0,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Calificaciones",
-                style: TextStyle(
-                  fontSize: 14.0,
-                ),
-              ),
-              SizedBox(
-                height: 2.0,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.45,
-                child: Text(
-                  "Consulta por cuatrimestre",
-                  style: TextStyle(
-                    fontSize: 13.0,
-                    color: Colors.white70,
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
+    child: const ListTile(
+      leading: Padding(
+        padding: EdgeInsets.only(left: 8.0),
+        child: Icon(
+          Icons.school,
+          size: 35,
+        ),
+      ),
+      dense: true,
+      contentPadding: EdgeInsets.all(0.0),
+      horizontalTitleGap: 20.0,
+      visualDensity: VisualDensity(horizontal: 0, vertical: -1),
+      title: Text(
+        'Calificaciones',
+        style: TextStyle(
+          fontSize: 14.0,
+          color: Colors.white,
+        ),
+      ),
+      subtitle: Text(
+        'Consulta por cuatrimestre.',
+        style: TextStyle(
+          fontSize: 13.0,
+          color: Colors.white70,
+        ),
       ),
     ),
   );
@@ -208,44 +204,31 @@ ElevatedButton _botonCalendario(BuildContext context) {
     onPressed: () {
       Navigator.pushNamed(context, '/calendario');
     },
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.calendar_today,
-            color: Colors.black45,
-            size: 35.0,
-          ),
-          SizedBox(
-            width: 20.0,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Calendario",
-                style: TextStyle(
-                  fontSize: 14.0,
-                ),
-              ),
-              SizedBox(
-                height: 2.0,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.45,
-                child: Text(
-                  "Calendario escolar",
-                  style: TextStyle(
-                    fontSize: 13.0,
-                    color: Colors.white70,
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
+    child: const ListTile(
+      leading: Padding(
+        padding: EdgeInsets.only(left: 8.0),
+        child: Icon(
+          Icons.calendar_today,
+          size: 35,
+        ),
+      ),
+      dense: true,
+      contentPadding: EdgeInsets.all(0.0),
+      horizontalTitleGap: 20.0,
+      visualDensity: VisualDensity(horizontal: 0, vertical: -1),
+      title: Text(
+        'Calendario',
+        style: TextStyle(
+          fontSize: 14.0,
+          color: Colors.white,
+        ),
+      ),
+      subtitle: Text(
+        'Calendario escolar.',
+        style: TextStyle(
+          fontSize: 13.0,
+          color: Colors.white70,
+        ),
       ),
     ),
   );
@@ -253,7 +236,6 @@ ElevatedButton _botonCalendario(BuildContext context) {
 
 Container informacionWidget(BuildContext context, data) {
   return Container(
-    margin: EdgeInsets.all(0.0),
     width: MediaQuery.of(context).size.width,
     //height: MediaQuery.of(context).size.height * 0.46,
     decoration: BoxDecoration(
@@ -277,19 +259,19 @@ Container informacionWidget(BuildContext context, data) {
         child: Image.asset('assets/images/cuervo_perfil.png'),
         backgroundColor: Colors.white,
       ),
-      SizedBox(
+      const SizedBox(
         height: 10.0,
       ),
       Text(
           '${data["estudiante"]["datos"]["nombre"]} ${data["estudiante"]["datos"]["apellido_paterno"]} ${data["estudiante"]["datos"]["apellido_materno"]}',
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20.0,
           )),
-      SizedBox(
+      const SizedBox(
         height: 10.0,
       ),
-      Text(
+      const Text(
         'Cuervo',
         style: TextStyle(
           color: Colors.white,
@@ -300,8 +282,8 @@ Container informacionWidget(BuildContext context, data) {
         height: MediaQuery.of(context).size.height * 0.05,
       ),
       Container(
-        margin: EdgeInsets.only(top: 10.0),
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        margin: const EdgeInsets.only(top: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           // No border
@@ -317,161 +299,151 @@ Container informacionWidget(BuildContext context, data) {
           ),
         ),
         child: Card(
-            margin:
-                EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
+            margin: const EdgeInsets.only(
+                top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
             elevation: 2.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             child: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                          child: Column(
+                      Column(
                         children: [
                           Text(
                             'Matrícula',
                             style: TextStyle(
                                 color: Colors.grey[400], fontSize: 14.0),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
                           Text(
                             '${data["estudiante"]["datos"]["matricula"]}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 15.0,
                             ),
                           )
                         ],
-                      )),
-                      Container(
-                        child: Column(children: [
-                          Text(
-                            'Grupo',
-                            style: TextStyle(
-                                color: Colors.grey[400], fontSize: 14.0),
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            '${data["estudiante"]["datos"]["grupo"]}',
-                            style: TextStyle(
-                              fontSize: 15.0,
-                            ),
-                          )
-                        ]),
                       ),
-                      Container(
-                          child: Column(
+                      Column(children: [
+                        Text(
+                          'Grupo',
+                          style: TextStyle(
+                              color: Colors.grey[400], fontSize: 14.0),
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        Text(
+                          '${data["estudiante"]["datos"]["grupo"]}',
+                          style: const TextStyle(
+                            fontSize: 15.0,
+                          ),
+                        )
+                      ]),
+                      Column(
                         children: [
                           Text(
                             'Cuatrimestre',
                             style: TextStyle(
                                 color: Colors.grey[400], fontSize: 14.0),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
                           Text(
                             '${data["estudiante"]["datos"]["cuatrimiestre"]}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 15.0,
                             ),
                           )
                         ],
-                      )),
+                      ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Promedio General',
-                              style: TextStyle(
-                                  color: Colors.grey.shade400, fontSize: 14.0),
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            SizedBox(
-                              child: Text(
-                                '${data["estudiante"]["datos"]["promedio_general"]}',
-                                //'9.6',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                ),
-                                textAlign: TextAlign.center,
+                      Column(
+                        children: [
+                          Text(
+                            'Promedio General',
+                            style: TextStyle(
+                                color: Colors.grey.shade400, fontSize: 14.0),
+                          ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          SizedBox(
+                            child: Text(
+                              '${data["estudiante"]["datos"]["promedio_general"]}',
+                              //'9.6',
+                              style: const TextStyle(
+                                fontSize: 15.0,
                               ),
-                            )
-                          ],
-                        ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
                       ),
-                      Container(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Estatus',
-                              style: TextStyle(
-                                  color: Colors.grey.shade400, fontSize: 14.0),
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            SizedBox(
-                              child: Text(
-                                '${data["estudiante"]["datos"]["situacion_academica"]}',
-                                //'9.6',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                ),
-                                textAlign: TextAlign.center,
+                      Column(
+                        children: [
+                          Text(
+                            'Estatus',
+                            style: TextStyle(
+                                color: Colors.grey.shade400, fontSize: 14.0),
+                          ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          SizedBox(
+                            child: Text(
+                              '${data["estudiante"]["datos"]["situacion_academica"]}',
+                              //'9.6',
+                              style: const TextStyle(
+                                fontSize: 15.0,
                               ),
-                            )
-                          ],
-                        ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Carrera',
-                              style: TextStyle(
-                                  color: Colors.grey[400], fontSize: 14.0),
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: Text(
-                                '${data["estudiante"]["datos"]["carrera"]}',
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                ),
-                                textAlign: TextAlign.center,
+                      Column(
+                        children: [
+                          Text(
+                            'Carrera',
+                            style: TextStyle(
+                                color: Colors.grey[400], fontSize: 14.0),
+                          ),
+                          const SizedBox(
+                            height: 5.0,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            child: Text(
+                              '${data["estudiante"]["datos"]["carrera"]}',
+                              style: const TextStyle(
+                                fontSize: 14.0,
                               ),
-                            )
-                          ],
-                        ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
