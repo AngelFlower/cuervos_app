@@ -67,6 +67,7 @@ class _GradesPageState extends State<GradesPage> {
         padding:
             const EdgeInsets.only(top: 6.0, left: 6.0, right: 6.0, bottom: 6.0),
         child: ExpansionTile(
+          initiallyExpanded: expanded,
           title: Text(
               '${snapshot.data['estudiante']['cuatrimestres'][(longitud - (index)).toString()]['nombre']}',
               style: TextStyle(

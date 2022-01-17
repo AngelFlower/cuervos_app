@@ -27,13 +27,11 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       height: double.infinity,
       decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-            Colors.green.shade700,
-            Colors.green.shade800,
-          ])),
+          gradient: LinearGradient(colors: [
+        Colors.green.shade600,
+        Colors.green.shade700,
+        Colors.green.shade800,
+      ])),
       child: Column(
         children: [
           Container(
@@ -45,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           "Cuervos",
                           style: TextStyle(
@@ -89,29 +87,28 @@ class _LoginPageState extends State<LoginPage> {
       // ignore: sized_box_for_whitespace
       child: Container(
         height: MediaQuery.of(context).size.height * 0.68,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: ListView(
           children: [
-            const SizedBox(
-              height: 32,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
             ),
             Container(
                 // color: Colors.red,
                 alignment: Alignment.center,
                 margin: const EdgeInsets.only(bottom: 13),
-                child: const FadeAnimation(
+                child: FadeAnimation(
                   1,
                   Text(
                     "Inicia sesión",
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: Colors.grey.shade700,
                     ),
                   ),
                 )),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
             Form(
               key: _form,
@@ -137,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(
-              height: 40.0,
+              height: 30.0,
             ),
             FadeAnimation(
               2,
@@ -149,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                   width: double.infinity,
                   alignment: Alignment.center,
-                  margin: const EdgeInsets.only(bottom: 40),
+                  margin: const EdgeInsets.only(top: 15.0, bottom: 40),
                   child: const Text(
                     "No almacenamos ninguna información",
                     style: TextStyle(color: Colors.black54, fontSize: 13),
@@ -238,6 +235,8 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.only(left: 10, top: 5),
                 alignment: Alignment.center,
                 child: TextFormField(
+                  maxLength: 10,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   controller: contrasenaController,
                   validator: (text) {
                     if (text!.isEmpty) {
@@ -266,42 +265,46 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _botonIniciarSesion() {
-    return ElevatedButton(
-      onPressed: () {
-        //Navigator.push(
-        //    context, MaterialPageRoute(builder: (context) => GradesPage()));
-        if (_form.currentState!.validate()) {
-          Login().login(
-              context: context,
-              matricula: matriculaController.text.toString(),
-              contrasena: contrasenaController.text.toString());
-        }
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: ElevatedButton(
+        onPressed: () {
+          //Navigator.push(
+          //    context, MaterialPageRoute(builder: (context) => GradesPage()));
+          if (_form.currentState!.validate()) {
+            Login().login(
+                context: context,
+                matricula: matriculaController.text.toString(),
+                contrasena: contrasenaController.text.toString());
+          }
 
-        //Navigator.pushNamed(context, '/home');
-      },
-      style: ElevatedButton.styleFrom(
-          onPrimary: Colors.greenAccent,
-          shadowColor: Colors.green,
-          elevation: 5,
-          padding: EdgeInsets.zero,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-      child: Ink(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Colors.green.shade700,
-              Colors.green.shade800,
-            ]),
-            borderRadius: BorderRadius.circular(20)),
-        child: Container(
-          width: 250.00,
-          height: 50,
-          alignment: Alignment.center,
-          child: const Text(
-            'Enviar',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white,
+          //Navigator.pushNamed(context, '/home');
+        },
+        style: ElevatedButton.styleFrom(
+            onPrimary: Colors.transparent,
+            elevation: 2,
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20))),
+        child: Center(
+          child: Ink(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Colors.green.shade600,
+                  Colors.green.shade700,
+                  Colors.green.shade800,
+                ]),
+                borderRadius: BorderRadius.circular(20)),
+            child: Container(
+              height: 50,
+              alignment: Alignment.center,
+              child: const Text(
+                'Enviar',
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
         ),

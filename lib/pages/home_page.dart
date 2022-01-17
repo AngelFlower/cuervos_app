@@ -245,6 +245,7 @@ Container informacionWidget(BuildContext context, data) {
       ),
       gradient: LinearGradient(
         colors: [
+          Colors.green.shade600,
           Colors.green.shade700,
           Colors.green.shade800,
         ],
@@ -293,6 +294,7 @@ Container informacionWidget(BuildContext context, data) {
 
           gradient: LinearGradient(
             colors: [
+              Colors.green.shade600,
               Colors.green.shade700,
               Colors.green.shade800,
             ],
