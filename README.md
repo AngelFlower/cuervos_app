@@ -7,6 +7,8 @@ Consulta tus calificaciones de la UTVT desde una amigable interfaz móvil.
 
 [![Google Play](https://img.shields.io/badge/Google%20Play-Android-blue.svg?style=flat-square)](https://play.google.com/store/apps/details?id=com.cabisolutions.cuervos)
 
+**¿Te gusta nuestra app? Considera clickear los anuncios para mantener este proyecto.**
+
 Dale estrella ⭐ al repositorio si te gusta lo que ves 😉.
 
 ## Requerimientos ✨
