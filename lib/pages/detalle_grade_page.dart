@@ -47,7 +47,7 @@ class DetalleGradePage extends StatelessWidget {
                   topLeft: Radius.circular(20.0),
                   topRight: Radius.circular(20.0),
                 )),
-                child: Container(
+                child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.5,
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
@@ -132,7 +132,7 @@ class DetalleGradePage extends StatelessWidget {
         ),
       );
     } else {
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     }
   }
 
@@ -148,8 +148,8 @@ class DetalleGradePage extends StatelessWidget {
     if (arguments['existenExtras'] == false) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('No hay extras'),
+        children: const [
+          Text('No hay extras'),
         ],
       );
     } else {

@@ -1,5 +1,4 @@
 import 'package:cuervos_app/helpers/ad_helper.dart';
-import 'package:cuervos_app/libs/shimmer_animation.dart';
 import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
@@ -39,20 +38,46 @@ class _HomePageState extends State<HomePage> {
                   }),
               Positioned(
                 top: 0.0,
-                left: 0.0,
                 right: 0.0,
+                width: MediaQuery.of(context).size.width,
                 child: AppBar(
                   // You can add title here
                   actions: [
+                    Expanded(
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/about');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.info, color: Colors.white70),
+                                SizedBox(width: 4),
+                                Text('Acerca de',
+                                    style: TextStyle(color: Colors.white70)),
+                              ],
+                            ),
+                          )),
+                    ),
+                    // expanded
+
                     GestureDetector(
                         onTap: () {
                           Login().deleteCookie();
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/login', (Route<dynamic> route) => false);
                         },
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.only(right: 20),
-                          child: Icon(Icons.exit_to_app, color: Colors.white70),
+                          child: Row(
+                            children: const [
+                              Text('Salir',
+                                  style: TextStyle(color: Colors.white70)),
+                              SizedBox(width: 4),
+                              Icon(Icons.exit_to_app, color: Colors.white70),
+                            ],
+                          ),
                         )),
                   ],
 
@@ -64,12 +89,10 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          child: AdmobBanner(
-            adUnitId: AdHelper.bannerAdUnitId,
-            adSize: AdmobBannerSize.BANNER,
-            listener: (AdmobAdEvent event, Map<String, dynamic>? args) {},
-          ),
+        bottomNavigationBar: AdmobBanner(
+          adUnitId: AdHelper.bannerAdUnitId,
+          adSize: AdmobBannerSize.BANNER,
+          listener: (AdmobAdEvent event, Map<String, dynamic>? args) {},
         ));
   }
 }

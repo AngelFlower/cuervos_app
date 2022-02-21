@@ -44,7 +44,7 @@ class CalendarioPage extends StatelessWidget {
                   ),
                 ),
                 floatingActionButton: FloatingActionButton(
-                  child: Icon(Icons.share),
+                  child: const Icon(Icons.share),
                   backgroundColor: Colors.green.shade600,
                   onPressed: () async {
                     final imageurl = snapshot.data.toString();

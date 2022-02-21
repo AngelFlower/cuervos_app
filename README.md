@@ -35,7 +35,7 @@ Aquellos que levantaron el proyecto
 
 ## Licencia 📄
 
-Este proyecto está bajo la Licencia (CC) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+Este proyecto está bajo la Licencia (CC) - mira el archivo [LICENSE.md](LICENSE) para detalles
 
 ## Expresiones de gratitud 🎁
 

@@ -1,7 +1,8 @@
-import 'package:admob_flutter/admob_flutter.dart';
-import 'package:cuervos_app/pages/detalle_grade_page.dart';
-import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
+import 'package:admob_flutter/admob_flutter.dart';
+import 'pages/detalle_grade_page.dart';
+import 'saiiut/login.dart';
+import 'pages/about_pasge.dart';
 import 'pages/calendario_page.dart';
 import 'pages/login_page.dart';
 import 'pages/grades_page.dart';
@@ -47,6 +48,7 @@ class _AppState extends State<App> {
                 '/calendario': (BuildContext context) => const CalendarioPage(),
                 '/detalleMateria': (BuildContext context) =>
                     const DetalleGradePage(),
+                '/about': (BuildContext context) => const AboutPage(),
               },
             );
           } else {
