@@ -31,15 +31,15 @@ class DetalleGradePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 55.0),
-                child: SvgPicture.asset(
-                  'assets/svg/undraw_professor.svg',
-                  height: MediaQuery.of(context).size.height * 0.32,
-                ),
-              ),
+              SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  child: const Padding(
+                    padding: EdgeInsets.only(top: 25.0),
+                    child: Icon(Icons.emoji_events,
+                        size: 200.0, color: Color.fromARGB(255, 241, 241, 241)),
+                  )),
               Card(
-                color: Colors.white.withOpacity(0.97),
+                color: Colors.white.withOpacity(0.99),
                 elevation: 1.0,
                 margin: const EdgeInsets.all(0),
                 shape: const RoundedRectangleBorder(
@@ -48,7 +48,7 @@ class DetalleGradePage extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 )),
                 child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    height: MediaQuery.of(context).size.height * 0.55,
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -57,17 +57,24 @@ class DetalleGradePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.max,
                         children: [
+                          const SizedBox(
+                            height: 10.0,
+                          ),
                           const Text(
                             'Detalle de calificaciones',
                             style: TextStyle(
                                 fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
-                            height: 5.0,
+                            height: 10.0,
                           ),
-                          Text('${arguments['materia']}'),
+                          Text('${arguments['materia']}',
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade600)),
                           const SizedBox(
-                            height: 5.0,
+                            height: 10.0,
                           ),
                           DefaultTabController(
                             length: 2,
@@ -90,7 +97,7 @@ class DetalleGradePage extends StatelessWidget {
                                     width: MediaQuery.of(context).size.width,
                                     height: 100,
                                     margin: const EdgeInsets.symmetric(
-                                        vertical: 15.0),
+                                        vertical: 20.0),
                                     child: TabBarView(
                                       children: [
                                         Row(
@@ -146,9 +153,9 @@ class DetalleGradePage extends StatelessWidget {
 
   Row _extrasWidget(BuildContext context, arguments) {
     if (arguments['existenExtras'] == false) {
-      return Row(
+      return const Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text('No hay extras'),
         ],
       );

@@ -2,7 +2,7 @@ import 'package:cuervos_app/helpers/ad_helper.dart';
 import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:cuervos_app/saiiut/login.dart';
 import 'package:flutter/material.dart';
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,80 +20,80 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // back button
-        body: Container(
-          color: Colors.grey.shade200,
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
-            children: [
-              FutureBuilder<dynamic>(
-                  future: obtenerInfo(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return _perfil(context, snapshot.data);
-                    } else {
-                      // return const ShimmerLoading();
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  }),
-              Positioned(
-                top: 0.0,
-                right: 0.0,
-                width: MediaQuery.of(context).size.width,
-                child: AppBar(
-                  // You can add title here
-                  actions: [
-                    Expanded(
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/about');
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Row(
-                              children: const [
-                                Icon(Icons.info, color: Colors.white70),
-                                SizedBox(width: 4),
-                                Text('Acerca de',
-                                    style: TextStyle(color: Colors.white70)),
-                              ],
-                            ),
-                          )),
-                    ),
-                    // expanded
-
-                    GestureDetector(
+      // back button
+      body: Container(
+        color: Colors.grey.shade200,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: [
+            FutureBuilder<dynamic>(
+                future: obtenerInfo(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return _perfil(context, snapshot.data);
+                  } else {
+                    // return const ShimmerLoading();
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
+            Positioned(
+              top: 0.0,
+              right: 0.0,
+              width: MediaQuery.of(context).size.width,
+              child: AppBar(
+                // You can add title here
+                actions: [
+                  Expanded(
+                    child: GestureDetector(
                         onTap: () {
-                          Login().deleteCookie();
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/login', (Route<dynamic> route) => false);
+                          Navigator.of(context).pushNamed('/about');
                         },
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 20),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 20),
                           child: Row(
-                            children: const [
-                              Text('Salir',
-                                  style: TextStyle(color: Colors.white70)),
+                            children: [
+                              Icon(Icons.info, color: Colors.white70),
                               SizedBox(width: 4),
-                              Icon(Icons.exit_to_app, color: Colors.white70),
+                              Text('Acerca de',
+                                  style: TextStyle(color: Colors.white70)),
                             ],
                           ),
                         )),
-                  ],
+                  ),
+                  // expanded
 
-                  backgroundColor: Colors.blue
-                      .withOpacity(0.0), //You can make this transparent
-                  elevation: 0.0, //No shadow
-                ),
+                  GestureDetector(
+                      onTap: () {
+                        Login().deleteCookie();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/login', (Route<dynamic> route) => false);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 20),
+                        child: Row(
+                          children: [
+                            Text('Salir',
+                                style: TextStyle(color: Colors.white70)),
+                            SizedBox(width: 4),
+                            Icon(Icons.exit_to_app, color: Colors.white70),
+                          ],
+                        ),
+                      )),
+                ],
+
+                backgroundColor: Colors.green
+                    .withOpacity(0.0), //You can make this transparent
+                elevation: 0.0, //No shadow
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        bottomNavigationBar: AdmobBanner(
-          adUnitId: AdHelper.bannerAdUnitId,
-          adSize: AdmobBannerSize.BANNER,
-          listener: (AdmobAdEvent event, Map<String, dynamic>? args) {},
-        ));
+      ),
+      // bottomNavigationBar: AdmobBanner(
+      //   adUnitId: AdHelper.bannerAdUnitId,
+      //   adSize: AdmobBannerSize.BANNER,
+      //   listener: (AdmobAdEvent event, Map<String, dynamic>? args) {},
+    );
   }
 }
 
@@ -125,6 +125,7 @@ Container consultaWidget(BuildContext context) {
     padding: const EdgeInsets.symmetric(horizontal: 20.0),
     child: Center(
         child: Card(
+            color: Colors.white.withOpacity(0.97),
             elevation: 2.0,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
@@ -157,13 +158,10 @@ Container consultaWidget(BuildContext context) {
                     color: Colors.grey[300],
                   ),
                   _botonCalificaciones(context),
-                  Divider(
-                    color: Colors.grey[300],
+                  const SizedBox(
+                    height: 15.0,
                   ),
                   _botonCalendario(context),
-                  Divider(
-                    color: Colors.grey[300],
-                  ),
                   const SizedBox(
                     height: 20.0,
                   ),
@@ -176,11 +174,11 @@ Container consultaWidget(BuildContext context) {
 ElevatedButton _botonCalificaciones(BuildContext context) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-      primary: Colors.green.shade400,
+      backgroundColor: Colors.green.shade700,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
-      elevation: 10.0,
+      elevation: 0,
     ),
     onPressed: () {
       Navigator.pushNamed(context, '/grades');
@@ -191,6 +189,7 @@ ElevatedButton _botonCalificaciones(BuildContext context) {
         child: Icon(
           Icons.school,
           size: 35,
+          color: Color.fromARGB(255, 233, 231, 231),
         ),
       ),
       dense: true,
@@ -218,12 +217,11 @@ ElevatedButton _botonCalificaciones(BuildContext context) {
 ElevatedButton _botonCalendario(BuildContext context) {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
-      primary: Colors.green.shade400,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      elevation: 10.0,
-    ),
+        backgroundColor: Colors.green.shade700,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        elevation: 0),
     onPressed: () {
       Navigator.pushNamed(context, '/calendario');
     },
@@ -233,6 +231,7 @@ ElevatedButton _botonCalendario(BuildContext context) {
         child: Icon(
           Icons.calendar_today,
           size: 35,
+          color: Color.fromARGB(255, 233, 231, 231),
         ),
       ),
       dense: true,
@@ -276,12 +275,12 @@ Container informacionWidget(BuildContext context, data) {
     ),
     child: Column(children: [
       SizedBox(
-        height: MediaQuery.of(context).size.height * 0.15,
+        height: MediaQuery.of(context).size.height * 0.13,
       ),
       CircleAvatar(
         radius: MediaQuery.of(context).size.height * 0.07,
+        backgroundColor: Colors.white.withOpacity(0.89),
         child: Image.asset('assets/images/cuervo_perfil.png'),
-        backgroundColor: Colors.white,
       ),
       const SizedBox(
         height: 10.0,
@@ -303,7 +302,7 @@ Container informacionWidget(BuildContext context, data) {
         ),
       ),
       SizedBox(
-        height: MediaQuery.of(context).size.height * 0.05,
+        height: MediaQuery.of(context).size.height * 0.01,
       ),
       Container(
         margin: const EdgeInsets.only(top: 10.0),
@@ -324,6 +323,7 @@ Container informacionWidget(BuildContext context, data) {
           ),
         ),
         child: Card(
+            color: Colors.white.withOpacity(0.99),
             margin: const EdgeInsets.only(
                 top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
             elevation: 2.0,
@@ -341,7 +341,7 @@ Container informacionWidget(BuildContext context, data) {
                           Text(
                             'Matrícula',
                             style: TextStyle(
-                                color: Colors.grey[400], fontSize: 14.0),
+                                color: Colors.grey[600], fontSize: 14.0),
                           ),
                           const SizedBox(
                             height: 5.0,
@@ -358,7 +358,7 @@ Container informacionWidget(BuildContext context, data) {
                         Text(
                           'Grupo',
                           style: TextStyle(
-                              color: Colors.grey[400], fontSize: 14.0),
+                              color: Colors.grey[600], fontSize: 14.0),
                         ),
                         const SizedBox(
                           height: 5.0,
@@ -375,7 +375,7 @@ Container informacionWidget(BuildContext context, data) {
                           Text(
                             'Cuatrimestre',
                             style: TextStyle(
-                                color: Colors.grey[400], fontSize: 14.0),
+                                color: Colors.grey[600], fontSize: 14.0),
                           ),
                           const SizedBox(
                             height: 5.0,
@@ -401,7 +401,7 @@ Container informacionWidget(BuildContext context, data) {
                           Text(
                             'Promedio General',
                             style: TextStyle(
-                                color: Colors.grey.shade400, fontSize: 14.0),
+                                color: Colors.grey.shade500, fontSize: 14.0),
                           ),
                           const SizedBox(
                             height: 5.0,
@@ -423,7 +423,7 @@ Container informacionWidget(BuildContext context, data) {
                           Text(
                             'Estatus',
                             style: TextStyle(
-                                color: Colors.grey.shade400, fontSize: 14.0),
+                                color: Colors.grey.shade500, fontSize: 14.0),
                           ),
                           const SizedBox(
                             height: 5.0,
@@ -453,7 +453,7 @@ Container informacionWidget(BuildContext context, data) {
                           Text(
                             'Carrera',
                             style: TextStyle(
-                                color: Colors.grey[400], fontSize: 14.0),
+                                color: Colors.grey[600], fontSize: 14.0),
                           ),
                           const SizedBox(
                             height: 5.0,

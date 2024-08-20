@@ -33,11 +33,13 @@ if (keystorePropertiesFile.exists()) {
 
 android {
 
+    namespace = "com.cabisolutions.cuervos"
+
     lintOptions {
         checkReleaseBuilds false
     }
 
-    compileSdkVersion 31
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -56,7 +58,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.cabisolutions.cuervos"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 34
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -21,30 +21,8 @@ class CalendarioPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.green.shade500,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  title: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Calendario Escolar',
-                          style: TextStyle(fontWeight: FontWeight.w400)),
-                      Text(
-                        'Puedes utilizar gestos',
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey.shade100,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ),
-                ),
+                appBar: getAppBarCalendar(context),
                 floatingActionButton: FloatingActionButton(
-                  child: const Icon(Icons.share),
                   backgroundColor: Colors.green.shade600,
                   onPressed: () async {
                     final imageurl = snapshot.data.toString();
@@ -54,8 +32,10 @@ class CalendarioPage extends StatelessWidget {
                     final temp = await getTemporaryDirectory();
                     final path = '${temp.path}/image.jpg';
                     File(path).writeAsBytesSync(bytes);
-                    await Share.shareFiles([path], text: 'Image Shared');
+                    await Share.shareXFiles([XFile(path)],
+                        text: 'Imagen del calendario escolar');
                   },
+                  child: const Icon(Icons.share, color: Colors.white),
                 ),
                 body: PhotoView(
                   backgroundDecoration:
@@ -63,12 +43,59 @@ class CalendarioPage extends StatelessWidget {
                   imageProvider: NetworkImage(snapshot.data.toString()),
                 ));
           } else {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
+            return Scaffold(
+              appBar: getAppBarCalendar(context),
+              body: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.25,
+                ),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.calendar_today,
+                            size: 50, color: Colors.grey.shade400),
+                        const SizedBox(height: 20),
+                        const LinearProgressIndicator(),
+                        const SizedBox(
+                            height:
+                                20), // Espacio entre el indicador y el texto
+                        const Text('Cargando, por favor espere...'),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             );
           }
         });
+  }
+
+  AppBar getAppBarCalendar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Colors.green.shade700,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => Navigator.pop(context),
+      ),
+      title: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Calendario Escolar',
+              style: TextStyle(fontWeight: FontWeight.w400)),
+          Text(
+            'Puedes utilizar gestos',
+            style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey.shade100,
+                fontWeight: FontWeight.w400),
+          ),
+        ],
+      ),
+    );
   }
 }

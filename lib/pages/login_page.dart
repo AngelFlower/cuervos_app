@@ -1,6 +1,5 @@
 import 'package:cuervos_app/widgets/form_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:cuervos_app/libs/fade_animation.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -23,36 +22,34 @@ class LoginPage extends StatelessWidget {
       child: Column(
         children: [
           Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.12),
-              child: FadeAnimation(
-                2,
-                Column(
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.12),
+            child: Column(
+              children: [
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          "Cuervos",
-                          style: TextStyle(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 3,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "Cuervos",
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 3,
+                      ),
                     ),
-                    Text('Consulta tus calificaciones',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white.withOpacity(0.9),
-                          letterSpacing: 0.6,
-                        )),
                   ],
                 ),
-              )),
+                Text('Consulta tus calificaciones',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white.withOpacity(0.9),
+                      letterSpacing: 0.6,
+                    )),
+              ],
+            ),
+          ),
           Flexible(
             child: Container(
               width: double.infinity,

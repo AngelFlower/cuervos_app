@@ -1,6 +1,5 @@
 import 'package:cuervos_app/saiiut/get_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class GradesPage extends StatefulWidget {
   const GradesPage({Key? key}) : super(key: key);
@@ -18,8 +17,9 @@ class _GradesPageState extends State<GradesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Calificaciones'),
-          backgroundColor: Colors.green.shade700),
+        backgroundColor: Colors.green.shade600,
+        title: const Text('Calificaciones'),
+      ),
       body: SafeArea(
         child: FutureBuilder(
           future: obtenerInfo(),
@@ -66,33 +66,38 @@ class _GradesPageState extends State<GradesPage> {
       child: Padding(
         padding:
             const EdgeInsets.only(top: 6.0, left: 6.0, right: 6.0, bottom: 6.0),
-        child: ExpansionTile(
-          initiallyExpanded: expanded,
-          title: Text(
-              '${snapshot.data['estudiante']['cuatrimestres'][(longitud - (index)).toString()]['nombre']}',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.grey.shade600)),
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                '${snapshot.data['estudiante']['cuatrimestres'][(longitud - (index)).toString()]['promedio']}',
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
-          ),
-          children: <Widget>[
-            SafeArea(
-              minimum: const EdgeInsets.symmetric(
-                horizontal: 8.0,
-              ),
-              child: SizedBox(
-                child: Column(
-                  children: calificacionesWidgets,
+        child: Theme(
+          data: ThemeData(dividerColor: Colors.transparent),
+          child: ExpansionTile(
+            initiallyExpanded: expanded,
+            collapsedBackgroundColor: Colors.white70,
+            backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+            title: Text(
+                '${snapshot.data['estudiante']['cuatrimestres'][(longitud - (index)).toString()]['nombre']}',
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey.shade600)),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  '${snapshot.data['estudiante']['cuatrimestres'][(longitud - (index)).toString()]['promedio']}',
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w400)),
+            ),
+            children: <Widget>[
+              SafeArea(
+                minimum: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                ),
+                child: SizedBox(
+                  child: Column(
+                    children: calificacionesWidgets,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -118,7 +123,7 @@ class _GradesPageState extends State<GradesPage> {
           '${materias['${j + 1}']['profesor']}',
         ),
         trailing: Icon(
-          Icons.arrow_forward,
+          Icons.arrow_forward_ios,
           color: _colorExtra(materias['${j + 1}']['existenExtras']),
         ),
         title: Text(

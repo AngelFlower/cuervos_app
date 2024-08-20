@@ -16,7 +16,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green.shade500,
+        backgroundColor: Colors.green.shade600,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -49,11 +49,11 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  Row _desarrolladorWidget(_nombre, _puesto, _url, _urlImage) {
+  Row _desarrolladorWidget(nombre, puesto, url, urlImage) {
     return Row(
       children: [
         CircleAvatar(
-          backgroundImage: NetworkImage(_urlImage),
+          backgroundImage: NetworkImage(urlImage),
           radius: 40,
         ),
         const SizedBox(width: 20),
@@ -62,7 +62,7 @@ class AboutPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _nombre,
+                nombre,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -70,7 +70,7 @@ class AboutPage extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                _puesto,
+                puesto,
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
@@ -82,12 +82,13 @@ class AboutPage extends StatelessWidget {
                     backgroundColor: MaterialStateProperty.all(
                       Colors.black54,
                     ),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                  onPressed: () {
-                    _launchURL(_url);
+                  onPressed: () async {
+                    await _launchURL(url);
                   },
-                  child: Row(mainAxisSize: MainAxisSize.min, children: const [
-                    FaIcon(FontAwesomeIcons.github),
+                  child: const Row(mainAxisSize: MainAxisSize.min, children: [
+                    FaIcon(FontAwesomeIcons.github, size: 20),
                     SizedBox(width: 8),
                     Text('Github'),
                   ]))
@@ -99,6 +100,8 @@ class AboutPage extends StatelessWidget {
   }
 }
 
-void _launchURL(_url) async {
-  if (!await launch(_url)) throw 'No se pudo abrir $_url';
+Future<void> _launchURL(String url) async {
+  if (!await launchUrl(Uri.parse(url))) {
+    throw 'Could not launch $url';
+  }
 }

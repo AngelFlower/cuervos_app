@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:admob_flutter/admob_flutter.dart';
+// import 'package:admob_flutter/admob_flutter.dart';
 import 'pages/detalle_grade_page.dart';
 import 'saiiut/login.dart';
 import 'pages/about_pasge.dart';
@@ -10,13 +10,13 @@ import 'pages/home_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize without device test ids.
-  Admob.initialize();
-  runApp(App());
+  // Initialize without
+  // Admob.initialize();
+  runApp(const App());
 }
 
 class App extends StatefulWidget {
-  App({Key? key}) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   _AppState createState() => _AppState();
@@ -38,13 +38,31 @@ class _AppState extends State<App> {
               initialRoute = '/home';
             }
             return MaterialApp(
-              darkTheme: ThemeData.dark(),
+              themeMode: ThemeMode.light,
+              theme: ThemeData(
+                useMaterial3: true,
+                primarySwatch: Colors.green,
+                primaryColor: Colors.green.shade600,
+                hintColor: Colors.grey.shade400,
+                secondaryHeaderColor: Colors.green.shade500,
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: Colors
+                      .green, // Color base para generar el esquema de colores
+                ),
+                fontFamily: 'Roboto',
+                buttonTheme: ButtonThemeData(
+                  buttonColor: Colors.green.shade500,
+                  textTheme: ButtonTextTheme.primary,
+                ),
+                appBarTheme: const AppBarTheme(
+                    foregroundColor: Color.fromARGB(255, 241, 241, 241)),
+              ),
               debugShowCheckedModeBanner: false,
               initialRoute: initialRoute,
               routes: {
-                '/login': (BuildContext context) => LoginPage(),
-                '/home': (BuildContext context) => HomePage(),
-                '/grades': (BuildContext context) => GradesPage(),
+                '/login': (BuildContext context) => const LoginPage(),
+                '/home': (BuildContext context) => const HomePage(),
+                '/grades': (BuildContext context) => const GradesPage(),
                 '/calendario': (BuildContext context) => const CalendarioPage(),
                 '/detalleMateria': (BuildContext context) =>
                     const DetalleGradePage(),
@@ -52,7 +70,7 @@ class _AppState extends State<App> {
               },
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

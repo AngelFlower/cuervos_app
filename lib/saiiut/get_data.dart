@@ -13,7 +13,7 @@ class GetData {
     if (cookie == null) {
       return null;
     }
-    var respuesta;
+    http.Response? respuesta;
     //print('cookie: $cookie');
     await http.get(datosUri, headers: {
       'Cookie': cookie,
