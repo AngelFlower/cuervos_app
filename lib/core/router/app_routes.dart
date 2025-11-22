@@ -4,7 +4,7 @@ import '../../features/home/presentation/home_page.dart';
 import '../../features/grades/presentation/grades_page.dart';
 import '../../features/calendar/presentation/calendario_page.dart';
 import '../../features/grades/presentation/detalle_grade_page.dart';
-import '../../features/about/presentation/about_pasge.dart';
+import '../../features/about/presentation/about_page.dart';
 
 abstract class AppRoutes {
   static Map<String, WidgetBuilder> get routes => {

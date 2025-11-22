@@ -18,63 +18,55 @@ class _FormWidgetState extends State<FormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.68,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 20),
+        Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.only(bottom: 13),
+          child: Text(
+            "Inicia sesión",
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade700,
             ),
-            Container(
-              // color: Colors.red,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(bottom: 13),
-              child: Text(
-                "Inicia sesión",
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade700,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.02,
-            ),
-            Form(
-              key: _form,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: _inputMatricula(),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: _inputContrasena(),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 30.0,
-            ),
-            _botonIniciarSesion(),
-            Container(
-                width: double.infinity,
-                alignment: Alignment.center,
-                margin: const EdgeInsets.only(top: 15.0, bottom: 40),
-                child: const Text(
-                  "No almacenamos ninguna información",
-                  style: TextStyle(color: Colors.black54, fontSize: 13),
-                )),
-          ],
+          ),
         ),
-      ),
+        const SizedBox(height: 16),
+        Form(
+          key: _form,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: _inputMatricula(),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: _inputContrasena(),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 30.0,
+        ),
+        _botonIniciarSesion(),
+        Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          margin: const EdgeInsets.only(top: 15.0, bottom: 20),
+          child: const Text(
+            "No almacenamos ninguna información",
+            style: TextStyle(color: Colors.black54, fontSize: 13),
+          ),
+        ),
+      ],
     );
   }
 

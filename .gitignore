@@ -32,7 +32,6 @@
 /build/
 
 # Web related
-lib/generated_plugin_registrant.dart
 
 # Symbolication related
 app.*.symbols
@@ -47,3 +46,10 @@ app.*.map.json
 /android/app/build
 
 /ios/build
+
+
+# firebase hosting
+.firebase/
+.flutter-plugins-dependencies
+.firebase/
+.firebaserc

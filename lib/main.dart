@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:admob_flutter/admob_flutter.dart';
 import 'core/services/saiiut/login.dart';
 import 'core/theme/theme_data.dart';
 import 'core/router/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize without
-  // Admob.initialize();
   runApp(const App());
 }
 
@@ -34,18 +31,14 @@ class AppState extends State<App> {
             initialRoute = '/home';
           }
           return MaterialApp(
+            title: "Cuervos App",
             themeMode: ThemeMode.light,
             theme: AppTheme.lightTheme,
             debugShowCheckedModeBanner: false,
             initialRoute: initialRoute,
             routes: AppRoutes.routes,
             builder: (context, child) {
-              return Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 700),
-                  child: child,
-                ),
-              );
+              return child!;
             },
           );
         } else {

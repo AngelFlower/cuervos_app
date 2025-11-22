@@ -1,7 +1,11 @@
 import 'package:cuervos_app/core/services/saiiut/get_data.dart';
 import 'package:cuervos_app/core/services/saiiut/login.dart';
 import 'package:flutter/material.dart';
-// import 'package:admob_flutter/admob_flutter.dart';
+import 'views/home_header.dart';
+import 'views/home_academic_grid.dart';
+import 'views/home_actions.dart';
+import 'views/home_mobile_info.dart';
+import 'widgets/donation_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,453 +15,417 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // get future map
   Future<dynamic> obtenerInfo() async {
     return await GetData().obtenerDatos();
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.orange.shade100,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.warning_amber_rounded,
+                  color: Colors.orange.shade700,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'Cerrar sesión',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          content: const Text(
+            '¿Estás seguro que deseas cerrar sesión?',
+            style: TextStyle(
+              fontSize: 16,
+              height: 1.5,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                'Cancelar',
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Cerrar diálogo
+                Login().deleteCookie();
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/login',
+                  (Route<dynamic> route) => false,
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red.shade600,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text(
+                'Cerrar sesión',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // back button
-      body: Container(
-        color: Colors.grey.shade200,
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: [
-            FutureBuilder<dynamic>(
-                future: obtenerInfo(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return _perfil(context, snapshot.data);
-                  } else {
-                    // return const ShimmerLoading();
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                }),
-            Positioned(
-              top: 0.0,
-              right: 0.0,
-              width: MediaQuery.of(context).size.width,
-              child: AppBar(
-                // You can add title here
-                actions: [
-                  Expanded(
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/about');
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Row(
-                            children: [
-                              Icon(Icons.info, color: Colors.white70),
-                              SizedBox(width: 4),
-                              Text('Acerca de', style: TextStyle(color: Colors.white70)),
-                            ],
-                          ),
-                        )),
+      backgroundColor: Colors.grey.shade50,
+      appBar: MediaQuery.of(context).size.width > 600
+          ? AppBar(
+              elevation: 0,
+              backgroundColor: Colors.white,
+              title: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.green.shade600, Colors.green.shade700],
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Icon(Icons.school, color: Colors.white, size: 24),
                   ),
-                  // expanded
-
-                  GestureDetector(
-                      onTap: () {
-                        Login().deleteCookie();
-                        Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: Row(
-                          children: [
-                            Text('Salir', style: TextStyle(color: Colors.white70)),
-                            SizedBox(width: 4),
-                            Icon(Icons.exit_to_app, color: Colors.white70),
-                          ],
-                        ),
-                      )),
+                  const SizedBox(width: 12),
+                  const Text(
+                    'Portal Estudiante',
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                 ],
-
-                backgroundColor: Colors.green.withOpacity(0.0), //You can make this transparent
-                elevation: 0.0, //No shadow
               ),
-            ),
-          ],
-        ),
+              actions: [
+                TextButton.icon(
+                  onPressed: () => Navigator.of(context).pushNamed('/about'),
+                  icon: const Icon(Icons.info, size: 18),
+                  label: const Text('Acerca de', style: TextStyle(fontSize: 14)),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.grey.shade700,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                TextButton.icon(
+                  onPressed: () => _showLogoutDialog(context),
+                  icon: const Icon(Icons.exit_to_app, size: 18),
+                  label: const Text('Salir', style: TextStyle(fontSize: 14)),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.grey.shade700,
+                  ),
+                ),
+                const SizedBox(width: 16),
+              ],
+            )
+          : null,
+      body: FutureBuilder<dynamic>(
+        future: obtenerInfo(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _perfil(context, snapshot.data);
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.green.shade600,
+              ),
+            );
+          }
+        },
       ),
-      // bottomNavigationBar: AdmobBanner(
-      //   adUnitId: AdHelper.bannerAdUnitId,
-      //   adSize: AdmobBannerSize.BANNER,
-      //   listener: (AdmobAdEvent event, Map<String, dynamic>? args) {},
     );
   }
 }
 
+void _showLogoutDialogGlobal(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.orange.shade100,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.warning_amber_rounded,
+                color: Colors.orange.shade700,
+                size: 24,
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Text(
+              'Cerrar sesión',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        content: const Text(
+          '¿Estás seguro que deseas cerrar sesión?',
+          style: TextStyle(
+            fontSize: 16,
+            height: 1.5,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              'Cancelar',
+              style: TextStyle(
+                color: Colors.grey.shade600,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Login().deleteCookie();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                '/login',
+                (Route<dynamic> route) => false,
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red.shade600,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text(
+              'Cerrar sesión',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 Widget _perfil(BuildContext context, data) {
-  return Stack(
-    children: [
-      LayoutBuilder(builder: (context, constraint) {
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      final isDesktop = constraints.maxWidth > 1024;
+      final isTablet = constraints.maxWidth > 600 && constraints.maxWidth <= 1024;
+
+      if (isDesktop) {
         return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraint.maxHeight),
-            child: IntrinsicHeight(
-              child: Column(
-                children: [
-                  informacionWidget(context, data),
-                  consultaWidget(context),
-                ],
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildStudentHeader(context, data, true),
+                    const SizedBox(height: 32),
+                    buildAcademicGrid(context, data, true),
+                    const SizedBox(height: 24),
+                    buildActionsSection(context, true),
+                    const SizedBox(height: 24),
+                    const DonationCard(isDesktop: true),
+                  ],
+                ),
               ),
             ),
           ),
         );
-      }),
-    ],
-  );
-}
-
-Container consultaWidget(BuildContext context) {
-  return Container(
-    color: Colors.grey.shade200,
-    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-    child: Center(
-        child: Card(
-            color: Colors.white.withOpacity(0.97),
-            elevation: 2.0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            margin: const EdgeInsets.fromLTRB(0.0, 45.0, 0.0, 45.0),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Consulta",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 1.0,
-                  ),
-                  Text(
-                    "Toca un botón para consultar",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey.shade600,
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.grey[300],
-                  ),
-                  _botonCalificaciones(context),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  _botonCalendario(context),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                ],
-              ),
-            ))),
-  );
-}
-
-ElevatedButton _botonCalificaciones(BuildContext context) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.green.shade700,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      elevation: 0,
-    ),
-    onPressed: () {
-      Navigator.pushNamed(context, '/grades');
-    },
-    child: const ListTile(
-      leading: Padding(
-        padding: EdgeInsets.only(left: 8.0),
-        child: Icon(
-          Icons.school,
-          size: 35,
-          color: Color.fromARGB(255, 233, 231, 231),
-        ),
-      ),
-      dense: true,
-      contentPadding: EdgeInsets.all(0.0),
-      horizontalTitleGap: 20.0,
-      visualDensity: VisualDensity(horizontal: 0, vertical: -1),
-      title: Text(
-        'Calificaciones',
-        style: TextStyle(
-          fontSize: 14.0,
-          color: Colors.white,
-        ),
-      ),
-      subtitle: Text(
-        'Consulta por cuatrimestre.',
-        style: TextStyle(
-          fontSize: 13.0,
-          color: Colors.white70,
-        ),
-      ),
-    ),
-  );
-}
-
-ElevatedButton _botonCalendario(BuildContext context) {
-  return ElevatedButton(
-    style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.green.shade700,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        elevation: 0),
-    onPressed: () {
-      Navigator.pushNamed(context, '/calendario');
-    },
-    child: const ListTile(
-      leading: Padding(
-        padding: EdgeInsets.only(left: 8.0),
-        child: Icon(
-          Icons.calendar_today,
-          size: 35,
-          color: Color.fromARGB(255, 233, 231, 231),
-        ),
-      ),
-      dense: true,
-      contentPadding: EdgeInsets.all(0.0),
-      horizontalTitleGap: 20.0,
-      visualDensity: VisualDensity(horizontal: 0, vertical: -1),
-      title: Text(
-        'Calendario',
-        style: TextStyle(
-          fontSize: 14.0,
-          color: Colors.white,
-        ),
-      ),
-      subtitle: Text(
-        'Calendario escolar.',
-        style: TextStyle(
-          fontSize: 13.0,
-          color: Colors.white70,
-        ),
-      ),
-    ),
-  );
-}
-
-Container informacionWidget(BuildContext context, data) {
-  return Container(
-    width: MediaQuery.of(context).size.width,
-    //height: MediaQuery.of(context).size.height * 0.46,
-    decoration: BoxDecoration(
-      border: Border.all(
-        color: Colors.red,
-        style: BorderStyle.none,
-      ),
-      gradient: LinearGradient(
-        colors: [
-          Colors.green.shade600,
-          Colors.green.shade700,
-          Colors.green.shade800,
-        ],
-      ),
-    ),
-    child: Column(children: [
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.13,
-      ),
-      CircleAvatar(
-        radius: MediaQuery.of(context).size.height * 0.07,
-        backgroundColor: Colors.white.withOpacity(0.89),
-        child: Image.asset('assets/images/cuervo_perfil.png'),
-      ),
-      const SizedBox(
-        height: 10.0,
-      ),
-      Text(
-          '${data["estudiante"]["datos"]["nombre"]} ${data["estudiante"]["datos"]["apellido_paterno"]} ${data["estudiante"]["datos"]["apellido_materno"]}',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-          )),
-      const SizedBox(
-        height: 10.0,
-      ),
-      const Text(
-        'Cuervo',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 15.0,
-        ),
-      ),
-      SizedBox(
-        height: MediaQuery.of(context).size.height * 0.01,
-      ),
-      Container(
-        margin: const EdgeInsets.only(top: 10.0),
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          // No border
-          border: Border.all(
-            style: BorderStyle.none,
+      } else if (isTablet) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildStudentHeader(context, data, false),
+                const SizedBox(height: 24),
+                buildAcademicGrid(context, data, false),
+                const SizedBox(height: 20),
+                buildActionsSection(context, false),
+                const SizedBox(height: 20),
+                const DonationCard(isDesktop: false),
+              ],
+            ),
           ),
-
-          gradient: LinearGradient(
-            colors: [
-              Colors.green.shade600,
-              Colors.green.shade700,
-              Colors.green.shade800,
+        );
+      } else {
+        final isMobile = constraints.maxWidth <= 600;
+        final padding = isMobile ? 20.0 : 40.0;
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.green.shade600,
+                      Colors.green.shade700,
+                      Colors.green.shade800,
+                    ],
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(32),
+                    bottomRight: Radius.circular(32),
+                  ),
+                ),
+                child: SafeArea(
+                  bottom: false,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(padding, 16, padding, padding),
+                    child: Column(
+                      children: [
+                        // Botones de acción en la parte superior
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: () => Navigator.of(context).pushNamed('/about'),
+                              icon: const Icon(Icons.info, color: Colors.white),
+                              tooltip: 'Acerca de',
+                            ),
+                            IconButton(
+                              onPressed: () => _showLogoutDialogGlobal(context),
+                              icon: const Icon(Icons.exit_to_app, color: Colors.white),
+                              tooltip: 'Salir',
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 20,
+                                spreadRadius: 5,
+                              ),
+                            ],
+                          ),
+                          child: CircleAvatar(
+                            radius: isMobile ? 50 : 60,
+                            backgroundColor: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Image.asset('assets/images/cuervo_perfil.png'),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          '${data["estudiante"]["datos"]["nombre"]} ${data["estudiante"]["datos"]["apellido_paterno"]} ${data["estudiante"]["datos"]["apellido_materno"]}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: isMobile ? 20 : 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Text(
+                            'Cuervo',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        buildInfoCardMobile(context, data, isMobile),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(padding),
+                child: Column(
+                  children: [
+                    buildActionCard(
+                      context: context,
+                      icon: Icons.school,
+                      title: 'Calificaciones',
+                      subtitle: 'Consulta por cuatrimestre',
+                      route: '/grades',
+                      gradient: [Colors.green.shade600, Colors.green.shade700],
+                    ),
+                    const SizedBox(height: 16),
+                    buildActionCard(
+                      context: context,
+                      icon: Icons.calendar_today,
+                      title: 'Calendario',
+                      subtitle: 'Calendario escolar',
+                      route: '/calendario',
+                      gradient: [Colors.blue.shade600, Colors.blue.shade700],
+                    ),
+                    const SizedBox(height: 16),
+                    const DonationCard(isDesktop: false),
+                  ],
+                ),
+              ),
             ],
           ),
-        ),
-        child: Card(
-            color: Colors.white.withOpacity(0.99),
-            margin: const EdgeInsets.only(top: 0.0, bottom: 10.0, left: 0.0, right: 0.0),
-            elevation: 2.0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Matrícula',
-                            style: TextStyle(color: Colors.grey[600], fontSize: 14.0),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            '${data["estudiante"]["datos"]["matricula"]}',
-                            style: const TextStyle(
-                              fontSize: 15.0,
-                            ),
-                          )
-                        ],
-                      ),
-                      Column(children: [
-                        Text(
-                          'Grupo',
-                          style: TextStyle(color: Colors.grey[600], fontSize: 14.0),
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        Text(
-                          '${data["estudiante"]["datos"]["grupo"]}',
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        )
-                      ]),
-                      Column(
-                        children: [
-                          Text(
-                            'Cuatrimestre',
-                            style: TextStyle(color: Colors.grey[600], fontSize: 14.0),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            '${data["estudiante"]["datos"]["cuatrimiestre"]}',
-                            style: const TextStyle(
-                              fontSize: 15.0,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Promedio General',
-                            style: TextStyle(color: Colors.grey.shade500, fontSize: 14.0),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          SizedBox(
-                            child: Text(
-                              '${data["estudiante"]["datos"]["promedio_general"]}',
-                              //'9.6',
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'Estatus',
-                            style: TextStyle(color: Colors.grey.shade500, fontSize: 14.0),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          SizedBox(
-                            child: Text(
-                              '${data["estudiante"]["datos"]["situacion_academica"]}',
-                              //'9.6',
-                              style: const TextStyle(
-                                fontSize: 15.0,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Carrera',
-                            style: TextStyle(color: Colors.grey[600], fontSize: 14.0),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            '${data["estudiante"]["datos"]["carrera"]}',
-                            style: const TextStyle(
-                              fontSize: 14.0,
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )),
-      ),
-    ]),
+        );
+      }
+    },
   );
 }
